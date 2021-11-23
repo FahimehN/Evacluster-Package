@@ -1,0 +1,84 @@
+# Label the subjects that shere the same connectivity
+getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
+{
+  
+  orgnames <-  rownames(object$dataConcensus);
+  if (who != "training")
+  {
+    orgnames <-  rownames(object$testConsesus);
+    pointJaccard <- object$jaccardpoint;
+    names(pointJaccard) <- orgnames;
+    concensusMat <- object$testConsesus[order(-pointJaccard),]
+  }
+  else
+  {
+    pointJaccard <- (object$trainJaccardpoint+object$jaccardpoint)/2.0;
+    names(pointJaccard) <- orgnames;
+    concensusMat <- object$dataConcensus[order(-pointJaccard),]
+  }
+  concensusMat <- concensusMat[,order(-pointJaccard)]
+  classID <- numeric(nrow(concensusMat));
+  names(classID) <-  rownames(concensusMat);
+  pointJaccard <- pointJaccard[order(-pointJaccard)];
+  npoints <- length(pointJaccard)
+  label <- 1;
+  for (lthr in thr)
+  {
+    totlabeled <- sum(classID > 0);
+    if (totlabeled < npoints)
+    {
+      added <- 1;
+      while (added > 0)
+      {
+        added <- 0;
+        for (i in 1:npoints)
+        {
+          if (classID[i] == 0)
+          {
+            minLables <- label;
+            wcon <- concensusMat[i,];
+            consensA <- (wcon > lthr) & (classID > 0)
+            consensB <- (wcon > lthr) & (classID == 0)
+            SconA <- sum(pointJaccard[consensA]);
+            SconB <- sum(pointJaccard[consensB]) - pointJaccard[i];
+            
+            if ( (SconB > 0.05*npoints) || (SconA > 0.05*npoints) )
+            {
+              if (SconB > SconA)
+              {
+                classID[consensB] <- label;
+                added <- 1;
+                label <- label + 1;
+              }
+              else
+              {
+                if (SconB >= 0)
+                {
+                  if (SconA > 0)
+                  {
+                    tb <- table(classID[consensA])
+                    minLables <- as.numeric(names(which.max(tb))[1])
+                    if (sum(pointJaccard[classID == minLables]) < SconB )
+                    {
+                      minLables <- label;
+                    }
+                  }
+                  classID[consensB] <- minLables;
+                  added <- 1;
+                  if (minLables == label)
+                  {
+                    label <- label + 1;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      totlabeled <- sum(classID > 0);
+      cat(minLables,":",sprintf("%5.3f",lthr),": ",totlabeled,": ")
+    }
+  }
+  classID <- classID[orgnames];
+  return (classID);
+}

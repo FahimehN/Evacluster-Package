@@ -1,0 +1,12 @@
+Package: Evacluster
+Type: Package
+Title: Clustering methods and evaluation metrics for selecting the best number of clusters
+Version: 0.1.0
+Date: 2020-07-18
+Author: Fahimeh Nezhadmoghadam,Jose Gerardo Tamez-Pena
+Maintainer: Fahimeh Nezhadmoghadam <A00828213@itesm.mx>
+Description: Contains a set of clustering methods and evaluation metrics.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
