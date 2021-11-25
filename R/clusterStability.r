@@ -49,6 +49,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       {
         cat("Done tSNE1:")
         message(paste('randsample= ',length(randomSamples[[i]])))
+        message(paste('VR= ',randomSamples[[i]]))
         
         tsneData <- tsneReductor(tempdata[randomSamples[[i]],],
                                         dim=n_components,perplexity=perplexity,
