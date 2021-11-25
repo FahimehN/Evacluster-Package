@@ -62,12 +62,22 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         
         if(length(dupIndex) != 0)
         {
+          cat("if if if:")
           message(paste('dupIndex= ',length(dupIndex)))
+          
           trainIndex <- randomSamples[[i]][-dupIndex]
           tempdata[trainIndex,] <- as.data.frame(tsneData$tsneY) 
           randomSamples[[i]] <- randomSamples[[i]][-dupIndex] 
+          
           message(paste('randsample 2= ',length(randomSamples[[i]])))
+          
           tempdata <- tempdata[-dupIndex,]
+          
+          message(paste('tsnetestData= ',nrow(tsnetestData$tsneY)))
+          message(paste('tempdata[-randomSamples[[i]],]= ',nrow(tempdata[-trainIndex,])))
+
+          tempdata[-trainIndex,] <- as.data.frame(tsnetestData$tsneY)
+          
           message(paste('tempdata= ',nrow(tempdata)))
           
           cat("Done tSNE3:")
@@ -75,12 +85,22 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         }
         else
         {
+          cat("else else else:")
+          message(paste('tsnetestData= ',nrow(tsnetestData$tsneY)))
+          message(paste('tempdata[-randomSamples[[i]],]= ',nrow(tempdata[-randomSamples[[i]],])))
+
+          
           tempdata[randomSamples[[i]],] <- as.data.frame(tsneData$tsneY) 
+          tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
+          
+          cat("Done tSNE4:")
         }
         
-        cat("Done tSNE4:")
-        tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
-        cat("Done tSNE5:")
+        # cat("Done tSNE5:")
+        # message(paste('tsnetestData= ',nrow(tsnetestData$tsneY)))
+        # message(paste('tempdata[-randomSamples[[i]],]= ',nrow(tempdata[-randomSamples[[i]],])))
+        # tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
+        # cat("Done tSNE6:")
         
       }
       else if (dimenreducmethod == "PCA")
