@@ -57,28 +57,32 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         
         dupIndex <- which(duplicated(tempdata[randomSamples[[i]],], fromLast = TRUE) %in% TRUE)
         
+        message(paste('nrowdupIndex= ',length(dupIndex)))
+        message(paste('dupIndex= ',dupIndex))
+        
         tsnetestData <- predict(tsneData,k=k_neighbor,tempdata[-randomSamples[[i]],])
         cat("Done tSNE2:")
         
         
         if(length(dupIndex) != 0)
         {
-          cat("if if if:")
-          message(paste('dupIndex= ',length(dupIndex)))
-          message(paste('Value dupIndex= ',dupIndex))
-          
+          cat("IF IF IF:")
+         
           trainIndex <- randomSamples[[i]][-dupIndex]
+          
           tempdata[trainIndex,] <- as.data.frame(tsneData$tsneY) 
-          randomSamples[[i]] <- randomSamples[[i]][-dupIndex] 
           
-          message(paste('randsample 2= ',length(randomSamples[[i]])))
+          message(paste('RS-F= ',length(randomSamples[[i]])))
+          randomSamples[[i]] <- randomSamples[[i]][-dupIndex]
+          message(paste('RS-A= ',length(randomSamples[[i]])))
           
-          tempdata <- tempdata[-dupIndex,]
+          removeIndex <- randomSamples[[i]][dupIndex]
+          tempdata <- tempdata[-removeIndex,]
           
-          message(paste('tempdata= ',nrow(tempdata)))
-          message(paste('tsnetestData= ',nrow(tsnetestData$tsneY)))
-          message(paste('tempdata[-randomSamples[[i]],]= ',nrow(tempdata[-trainIndex,])))
-
+          message(paste('TrainIndex= ',length(trainIndex)))
+          message(paste('TEMP= ',nrow(tempdata)))
+          message(paste('tempdata[-trainIndex,]= ',nrow(tempdata[-trainIndex,])))
+           
           tempdata[-trainIndex,] <- as.data.frame(tsnetestData$tsneY)
           
           message(paste('tempdata= ',nrow(tempdata)))
