@@ -64,6 +64,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         {
           cat("if if if:")
           message(paste('dupIndex= ',length(dupIndex)))
+          message(paste('Value dupIndex= ',dupIndex))
           
           trainIndex <- randomSamples[[i]][-dupIndex]
           tempdata[trainIndex,] <- as.data.frame(tsneData$tsneY) 
@@ -73,6 +74,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
           
           tempdata <- tempdata[-dupIndex,]
           
+          message(paste('tempdata= ',nrow(tempdata)))
           message(paste('tsnetestData= ',nrow(tsnetestData$tsneY)))
           message(paste('tempdata[-randomSamples[[i]],]= ',nrow(tempdata[-trainIndex,])))
 
