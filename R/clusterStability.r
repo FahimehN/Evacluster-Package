@@ -48,20 +48,40 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       else if (dimenreducmethod == "tSNE")
       {
         cat("Done tSNE1:")
+        message(paste('randsample= ',length(randomSamples[[i]])))
+        
         tsneData <- tsneReductor(tempdata[randomSamples[[i]],],
                                         dim=n_components,perplexity=perplexity,
                                         max_iter=max_iter)
-        cat("Done tSNE2:")
-        message(paste('randomSamples= ',nrow(tempdata[randomSamples[[i]],])))
-        message(paste('tsneY= ',nrow(tsneData$tsneY)))
+        
+        dupIndex <- which(duplicated(tempdata[randomSamples[[i]],], fromLast = TRUE) %in% TRUE)
         
         tsnetestData <- predict(tsneData,k=k_neighbor,tempdata[-randomSamples[[i]],])
-        cat("Done tSNE3:")
-        message(paste('tsneY= ',nrow(tsneData$tsneY)))
-        #trainData <- unique(tempdata[randomSamples[[i]],])
-        trainData <- as.data.frame(tsneData$tsneY) 
+        cat("Done tSNE2:")
+        
+        
+        if(length(dupIndex) != 0)
+        {
+          message(paste('dupIndex= ',length(dupIndex)))
+          trainIndex <- randomSamples[[i]][-dupIndex]
+          tempdata[trainIndex,] <- as.data.frame(tsneData$tsneY) 
+          randomSamples[[i]] <- randomSamples[[i]][-dupIndex] 
+          message(paste('randsample 2= ',length(randomSamples[[i]])))
+          tempdata <- tempdata[-dupIndex,]
+          message(paste('tempdata= ',nrow(tempdata)))
+          
+          cat("Done tSNE3:")
+          
+        }
+        else
+        {
+          tempdata[randomSamples[[i]],] <- as.data.frame(tsneData$tsneY) 
+        }
+        
+        cat("Done tSNE4:")
         tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
-
+        cat("Done tSNE5:")
+        
       }
       else if (dimenreducmethod == "PCA")
       {
@@ -74,7 +94,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       else {cat("Package does not support the selected reduction method !!")}
     }
     
-    mod1 <- clustermethod(tempdata[randomSamples[[i]],],...);#trainData 
+    mod1 <- clustermethod(tempdata[randomSamples[[i]],],...);
     clusterLabels[[i]] <- predict(mod1,tempdata); #data[-randomSamples[[i]] #tempdata[-randomSamples[[i]],]
     names(clusterLabels[[i]]$classification) <- rownames(tempdata) #data
     plot(data[,1:2],col = clusterLabels[[i]]$classification,main=sprintf("%d",i));
