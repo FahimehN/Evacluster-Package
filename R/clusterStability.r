@@ -6,7 +6,6 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
   clusterLabels <- list();
   randomSamples <- list();
   numberofClusters <- 0;
-  #data <- unique(data)
   testCounts <- numeric(nrow(data))
   randomSeeds <- sample(randomTests);
   
@@ -16,7 +15,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     message(paste('Done= ',i))
     
     ### Feature Selection ###
-    if (!is.null(featureselection))
+    if (featureselection == "YES")
     {
       message(paste('data Before FS=',nrow(data)))
       
@@ -28,7 +27,11 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       message(paste('Number of features= ',length(FS)))
       cat("Feature selection was Done!")
     }
-    else {tempdata <- data}
+    else {
+      data <- data[, ! names(data) %in% outcome, drop = F]
+      tempdata <- data
+      cat("Without Feature Selection!!!")
+      }
     
     ### Dimension Reduction ###
     
@@ -43,72 +46,26 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         
         tempdata[randomSamples[[i]],] <- as.data.frame(umapData$embedding)
         tempdata[-randomSamples[[i]],] <- as.data.frame(umaptestData)
-        cat("Done UMAP:")
+        cat("UMAP was Done!")
       }
       else if (dimenreducmethod == "tSNE")
       {
-        cat("Done tSNE1:")
-        message(paste('randsample= ',length(randomSamples[[i]])))
-        message(paste('VR= ',randomSamples[[i]]))
-        
         tsneData <- tsneReductor(tempdata[randomSamples[[i]],],
                                         dim=n_components,perplexity=perplexity,
                                         max_iter=max_iter)
         
         dupIndex <- which(duplicated(tempdata[randomSamples[[i]],], fromLast = TRUE) %in% TRUE)
         
-        message(paste('nrowdupIndex= ',length(dupIndex)))
-        message(paste('dupIndex= ',dupIndex))
-        
-        tsnetestData <- predict(tsneData,k=k_neighbor,tempdata[-randomSamples[[i]],])
-        cat("Done tSNE2:")
-        
-        
         if(length(dupIndex) != 0)
         {
-          cat("IF IF IF:")
-         
-          trainIndex <- randomSamples[[i]][-dupIndex]
-          
-          tempdata[trainIndex,] <- as.data.frame(tsneData$tsneY) 
-          
-          message(paste('RS-F= ',length(randomSamples[[i]])))
           randomSamples[[i]] <- randomSamples[[i]][-dupIndex]
-          message(paste('RS-A= ',length(randomSamples[[i]])))
-          
-          removeIndex <- randomSamples[[i]][dupIndex]
-          tempdata <- tempdata[-removeIndex,]
-          
-          message(paste('TrainIndex= ',length(trainIndex)))
-          message(paste('TEMP= ',nrow(tempdata)))
-          message(paste('tempdata[-trainIndex,]= ',nrow(tempdata[-trainIndex,])))
-           
-          tempdata[-trainIndex,] <- as.data.frame(tsnetestData$tsneY)
-          
-          message(paste('tempdata= ',nrow(tempdata)))
-          
-          cat("Done tSNE3:")
-          
-        }
-        else
-        {
-          cat("else else else:")
-          message(paste('tsnetestData= ',nrow(tsnetestData$tsneY)))
-          message(paste('tempdata[-randomSamples[[i]],]= ',nrow(tempdata[-randomSamples[[i]],])))
-
-          
-          tempdata[randomSamples[[i]],] <- as.data.frame(tsneData$tsneY) 
-          tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
-          
-          cat("Done tSNE4:")
         }
         
-        # cat("Done tSNE5:")
-        # message(paste('tsnetestData= ',nrow(tsnetestData$tsneY)))
-        # message(paste('tempdata[-randomSamples[[i]],]= ',nrow(tempdata[-randomSamples[[i]],])))
-        # tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
-        # cat("Done tSNE6:")
-        
+        tsnetestData <- predict(tsneData,k=k_neighbor,tempdata[-randomSamples[[i]],])
+ 
+        tempdata[randomSamples[[i]],] <- as.data.frame(tsneData$tsneY) 
+        tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
+        cat("t-SNE was Done!")
       }
       else if (dimenreducmethod == "PCA")
       {
@@ -116,7 +73,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         pcatestData <- predict(pcaData,tempdata[-randomSamples[[i]],])
         tempdata[randomSamples[[i]],] <- as.data.frame(pcaData$x)
         tempdata[-randomSamples[[i]],] <- as.data.frame(pcatestData)
-        cat("Done PCA!")
+        cat("PCA was Done!")
       }
       else {cat("Package does not support the selected reduction method !!")}
     }
