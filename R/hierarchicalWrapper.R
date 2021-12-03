@@ -35,8 +35,6 @@ hierarchicalCluster <- function(data=NULL,distmethod=NULL,k=NULL,...)
 #' @param cls A returned object of hierarchicalCluster function
 #' @param  testData A data set of new samples
 #' @return A list of cluster labels
-#' @examples
-#' pre <- predict(cls,testData[,1:4])
 #'
 #' @export
 predict.hierarchicalCluster <- function(object,...)
