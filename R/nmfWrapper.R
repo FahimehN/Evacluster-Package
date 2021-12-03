@@ -38,8 +38,6 @@ nmfCluster <- function(data=NULL,rank=NULL,...)
 #' @param cls A returned object of nmfCluster
 #' @param testData A data set of new samples
 #' @return A list of cluster labels
-#' @examples
-#' pre <- predict(cls,testData[,1:4])
 #'
 #' @export
 predict.nmfCluster <- function(object,...)

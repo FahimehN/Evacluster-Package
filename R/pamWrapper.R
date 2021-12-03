@@ -34,8 +34,6 @@ pamCluster <- function(data=NULL,...)
 #' @param cls A returned object of pamCluster function
 #' @param testData A data set of new samples
 #' @return A list of cluster labels
-#' @examples
-#' pre <- predict(cls,testData[,1:4])
 #'
 #' @export
 predict.pamCluster <- function(object,...)
