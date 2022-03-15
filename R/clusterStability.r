@@ -11,7 +11,12 @@
 #' @param perplexity The Perplexity parameter that determines the optimal number of neighbors in tSNE method.(it is only used in the tSNE reduction method)
 #' @param max_iter The maximum number of iterations for performing tSNE reduction method.
 #' @param k_neighbor The k_neighbor is used for computing the means of #neighbors with min distance (#Neighbor=sqrt(#Samples/k) for performing an embedding of new data using an existing embedding in the tSNE method.
-#' @param featureselection
+#' @param featureselection This parameter determines whether feature selection is applied before clustering data or not. if used, it should be "yes", otherwisw "no".
+#' @param outcome The outcome feature is used for feature selection.
+#' @param fs.pvalue The threshold pvalue used for feature selection process. The default value is 0.05.
+#' @param randomTests The number of iterations of the clustering process for computing the cluster stability.
+#' @param trainFraction This parameter determines the ratio of training data. The default value is 0.5.
+#' @param pac.thr
 #' 
 #' @return A list of cluster labels and a R object of class "fcm {ppclust}"
 #' @examples
