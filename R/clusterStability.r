@@ -5,7 +5,14 @@
 #' the data.
 #'
 #' @param data A Data set
-#' @param clustermethod The number of Clusters
+#' @param clustermethod The clustering method. This must be one of "Mclust","pamCluster","kmeansCluster", "hierarchicalCluster",and "FuzzyCluster".
+#' @param dimenreducmethod The dimensionality reduction method. This must be one of "UMAP","tSNE", and "PCA".
+#' @param n_components The dimension of the space that data embed into. It can be set to any integer value in the range of 2 to 100.
+#' @param perplexity The Perplexity parameter that determines the optimal number of neighbors in tSNE method.(it is only used in the tSNE reduction method)
+#' @param max_iter The maximum number of iterations for performing tSNE reduction method.
+#' @param k_neighbor The k_neighbor is used for computing the means of #neighbors with min distance (#Neighbor=sqrt(#Samples/k) for performing an embedding of new data using an existing embedding in the tSNE method.
+#' @param featureselection
+#' 
 #' @return A list of cluster labels and a R object of class "fcm {ppclust}"
 #' @examples
 #' library(datasets)
@@ -34,7 +41,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     message(paste('Done= ',i))
     
     ### Feature Selection ###
-    if (featureselection == "YES")
+    if (featureselection == "yes")
     {
       message(paste('data Before FS=',nrow(data)))
       
