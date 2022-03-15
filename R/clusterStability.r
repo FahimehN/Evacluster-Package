@@ -1,3 +1,22 @@
+#' clustering stability function
+#'
+#' This function computes the clustering stability to select the best number of clusters.
+#'  Feature selection and dimensionality reduction methods can be used before clustering 
+#'  the data.
+#'
+#' @param data A Data set
+#' @param k The number of Clusters
+#' @return A list of cluster labels and a R object of class "fcm {ppclust}"
+#' @examples
+#' library(datasets)
+#' data(iris)
+#'
+#' rndSamples <- sample(nrow(iris),100)
+#' trainData <- iris[rndSamples,]
+#' testData <- iris[-rndSamples,]
+#'
+#' cls <- FuzzyCluster(trainData[,1:4],3)
+#' @export
 clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NULL,
                              n_components = 3,perplexity = 25,max_iter = 1000,k_neighbor=3,
                              featureselection=NULL ,outcome=NULL,fs.pvalue = 0.05, 
