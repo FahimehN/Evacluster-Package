@@ -1,6 +1,6 @@
 #' clustering stability function
 #'
-#' This function computes the clustering stability to select the best number of clusters.
+#' This function computes the clustering stability that helps to select the best number of clusters.
 #'  Feature selection and dimensionality reduction methods can be used before clustering 
 #'  the data.
 #'
