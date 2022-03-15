@@ -1,11 +1,11 @@
 #' clustering stability function
 #'
 #' This function computes the clustering stability that helps to select the best number of clusters.
-#'  Feature selection and dimensionality reduction methods can be used before clustering 
-#'  the data.
+#' Feature selection and dimensionality reduction methods can be used before clustering 
+#' the data.
 #'
 #' @param data A Data set
-#' @param k The number of Clusters
+#' @param clustermethod The number of Clusters
 #' @return A list of cluster labels and a R object of class "fcm {ppclust}"
 #' @examples
 #' library(datasets)
