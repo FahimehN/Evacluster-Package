@@ -24,15 +24,53 @@ clusterStability(
 \arguments{
 \item{data}{A Data set}
 
-\item{k}{The number of Clusters}
+\item{clustermethod}{The clustering method. This must be one of "Mclust","pamCluster","kmeansCluster", "hierarchicalCluster",and "FuzzyCluster".}
+
+\item{dimenreducmethod}{The dimensionality reduction method. This must be one of "UMAP","tSNE", and "PCA".}
+
+\item{n_components}{The dimension of the space that data embed into. It can be set to any integer value in the range of 2 to 100.}
+
+\item{perplexity}{The Perplexity parameter that determines the optimal number of neighbors in tSNE method.(it is only used in the tSNE reduction method)}
+
+\item{max_iter}{The maximum number of iterations for performing tSNE reduction method.}
+
+\item{k_neighbor}{The k_neighbor is used for computing the means of #neighbors with min distance (#Neighbor=sqrt(#Samples/k) for performing an embedding of new data using an existing embedding in the tSNE method.}
+
+\item{featureselection}{This parameter determines whether feature selection is applied before clustering data or not. if used, it should be "yes", otherwisw "no".}
+
+\item{outcome}{The outcome feature is used for feature selection.}
+
+\item{fs.pvalue}{The threshold pvalue used for feature selection process. The default value is 0.05.}
+
+\item{randomTests}{The number of iterations of the clustering process for computing the cluster stability.}
+
+\item{trainFraction}{This parameter determines the ratio of training data. The default value is 0.5.}
+
+\item{pac.thr}{The pac.thr is the thresold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.}
 }
 \value{
-A list of cluster labels and a R object of class "fcm {ppclust}"
+A list with the following elements:
+\itemize{
+  \item randIndex - The letters of the alphabet.
+  \item jaccIndex - A vector of numbers.
+  \item meanJaccard - A vector of numbers.
+  \item randomSamples - A vector of numbers.
+  \item clusterLabels - A vector of numbers.
+  \item jaccardpoint - A vector of numbers.
+  \item averageNumberofClusters - A vector of numbers.
+  \item testConsesus - A vector of numbers.
+  \item trainRandIndex - A vector of numbers.
+  \item trainJaccIndex - A vector of numbers.
+  \item trainMeanJaccard - A vector of numbers.
+  \item trainJaccardpoint - A vector of numbers.
+  \item PAC - A vector of numbers.
+  \item dataConcensus - A vector of numbers.
+}
 }
 \description{
 This function computes the clustering stability that helps to select the best number of clusters.
- Feature selection and dimensionality reduction methods can be used before clustering 
- the data.
+Feature selection and dimensionality reduction methods can be used before clustering 
+the data.
 }
 \examples{
 library(datasets)

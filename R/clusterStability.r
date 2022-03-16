@@ -18,7 +18,22 @@
 #' @param trainFraction This parameter determines the ratio of training data. The default value is 0.5.
 #' @param pac.thr  The pac.thr is the thresold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.
 #' 
-#' @return A list of cluster labels and a R object of class "fcm {ppclust}"
+#' @return A list with the following elements:
+#' \itemize{
+#'   \item randIndex - A vector of the Rand Index that computes a similarity measure between two clusterings. 
+#'   \item jaccIndex - A vector of jaccard Index that measures how frequently pairs of items are joined together in two clustering data sets.
+#'   \item randomSamples - A vector with indexes of selected samples for training in each iteration.
+#'   \item clusterLabels - A vector of numbers.
+#'   \item jaccardpoint - A vector of numbers.
+#'   \item averageNumberofClusters - A vector of numbers.
+#'   \item testConsesus - A vector of numbers.
+#'   \item trainRandIndex - A vector of numbers.
+#'   \item trainJaccIndex - A vector of numbers.
+#'   \item trainMeanJaccard - A vector of numbers.
+#'   \item trainJaccardpoint - A vector of numbers.
+#'   \item PAC - A vector of numbers.
+#'   \item dataConcensus - A vector of numbers.
+#' }
 #' @examples
 #' library(datasets)
 #' data(iris)
@@ -194,7 +209,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
   pac <- sum(testConsesus[(testConsesus > pac.thr) & (testConsesus < (1.0 - pac.thr))])/nrow(data)/nrow(data);
 
 
-  result <- list(randIndex = randIndex,jaccIndex = jaccIndex,meanJaccard = meanJaccard,randomSamples = randomSamples,
+  result <- list(randIndex = randIndex,jaccIndex = jaccIndex,randomSamples = randomSamples,
                  clusterLabels=clusterLabels, jaccardpoint=jaccardpoint,averageNumberofClusters=numberofClusters,
                  testConsesus=testConsesus,trainRandIndex = trainrandIndex,trainJaccIndex = trainjaccIndex,trainMeanJaccard = trainmeanJaccard,
                  trainJaccardpoint=trainjaccardpoint,PAC=pac,dataConcensus=dataConcensus);
