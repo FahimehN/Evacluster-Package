@@ -23,14 +23,11 @@
 #'   \item randIndex - A vector of the Rand Index that computes a similarity measure between two clusterings. 
 #'   \item jaccIndex - A vector of jaccard Index that measures how frequently pairs of items are joined together in two clustering data sets.
 #'   \item randomSamples - A vector with indexes of selected samples for training in each iteration.
-#'   \item clusterLabels - A vector of numbers.
-#'   \item jaccardpoint - A vector of numbers.
-#'   \item averageNumberofClusters - A vector of numbers.
+#'   \item clusterLabels - A vector with clusters' labels in all iterations.
+#'   \item averageNumberofClusters - The mean Number of Clusters.
 #'   \item testConsesus - A vector of numbers.
 #'   \item trainRandIndex - A vector of numbers.
 #'   \item trainJaccIndex - A vector of numbers.
-#'   \item trainMeanJaccard - A vector of numbers.
-#'   \item trainJaccardpoint - A vector of numbers.
 #'   \item PAC - A vector of numbers.
 #'   \item dataConcensus - A vector of numbers.
 #' }
@@ -210,9 +207,9 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
 
 
   result <- list(randIndex = randIndex,jaccIndex = jaccIndex,randomSamples = randomSamples,
-                 clusterLabels=clusterLabels, jaccardpoint=jaccardpoint,averageNumberofClusters=numberofClusters,
-                 testConsesus=testConsesus,trainRandIndex = trainrandIndex,trainJaccIndex = trainjaccIndex,trainMeanJaccard = trainmeanJaccard,
-                 trainJaccardpoint=trainjaccardpoint,PAC=pac,dataConcensus=dataConcensus);
+                 clusterLabels=clusterLabels, averageNumberofClusters=numberofClusters,
+                 testConsesus=testConsesus,trainRandIndex = trainrandIndex,trainJaccIndex = trainjaccIndex,
+                 PAC=pac,dataConcensus=dataConcensus);
   class(result) <- "ClusterStability"
   return(result);
 }
