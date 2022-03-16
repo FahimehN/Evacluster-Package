@@ -18,7 +18,3 @@ A list of cluster labels
 This function predicts the labels of the cluster for new data based on
 cluster labels of the training set.
 }
-\examples{
-pre <- predict(cls,testData[,1:4])
-
-}

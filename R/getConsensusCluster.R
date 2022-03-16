@@ -1,4 +1,14 @@
-# Label the subjects that shere the same connectivity
+#' Consensus Clustering Results
+#'
+#' This function gets the labels of the subjects that share the same connectivity.
+#'
+#' @param object A object of "clusterStability" function result
+#' @param who This value shows the consensus clustering result of training and testing sets. If who="training" for training set, otherwise other sets. 
+#' @return A list of samples' labels with same connectivity.
+#' @examples
+#' Labscluster <- getConsensusCluster(ClustStab,who="training")
+#' 
+#' @export
 getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
 {
   
