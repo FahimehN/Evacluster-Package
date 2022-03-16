@@ -51,34 +51,39 @@ clusterStability(
 \value{
 A list with the following elements:
 \itemize{
-  \item randIndex - The letters of the alphabet.
-  \item jaccIndex - A vector of numbers.
-  \item meanJaccard - A vector of numbers.
-  \item randomSamples - A vector of numbers.
-  \item clusterLabels - A vector of numbers.
-  \item jaccardpoint - A vector of numbers.
-  \item averageNumberofClusters - A vector of numbers.
-  \item testConsesus - A vector of numbers.
-  \item trainRandIndex - A vector of numbers.
-  \item trainJaccIndex - A vector of numbers.
-  \item trainMeanJaccard - A vector of numbers.
-  \item trainJaccardpoint - A vector of numbers.
-  \item PAC - A vector of numbers.
-  \item dataConcensus - A vector of numbers.
+  \item randIndex - A vector of the Rand Index that computes a similarity measure between two clusterings. 
+  \item jaccIndex - A vector of jaccard Index that measures how frequently pairs of items are joined together in two clustering data sets.
+  \item randomSamples - A vector with indexes of selected samples for training in each iteration.
+  \item clusterLabels - A vector with clusters' labels in all iterations.
+  \item averageNumberofClusters - The mean Number of Clusters.
+  \item testConsesus - A vector of consensus clustering results of testing set.
+  \item trainRandIndex - A vector of the Rand Index for training set.
+  \item trainJaccIndex - A vector of the jaccard Index for training set.
+  \item PAC - The proportion of ambiguous clustering (PAC) score.
+  \item dataConcensus - A vector of consensus clustering results of training set.
 }
 }
 \description{
-This function computes the clustering stability that helps to select the best number of clusters.
+This function computes the stability of clustering that helps to select the best number of clusters.
 Feature selection and dimensionality reduction methods can be used before clustering 
 the data.
 }
 \examples{
-library(datasets)
-data(iris)
+// Dataset
+// https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
 
-rndSamples <- sample(nrow(iris),100)
-trainData <- iris[rndSamples,]
-testData <- iris[-rndSamples,]
+Data <- read.csv("C:/Semesters/Thesis/Data/Test Data sets/sobar-72.csv")
 
-cls <- FuzzyCluster(trainData[,1:4],3)
+ClustStab <- clusterStability(data=Data, clustermethod=Mclust, dimenreducmethod="UMAP",n_components = 3,featureselection="YES", 
+                             outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,G=3)
+
+
+ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",n_components = 3,
+                              perplexity=5,max_iter=100,k_neighbor=2,featureselection="YES", 
+                              outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,k=3)
+
+
+ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="PCA",n_components = 3,
+                              featureselection="NO",randomTests = 100,trainFraction = 0.7,center=3)
+
 }
