@@ -16,7 +16,7 @@
 #' @param fs.pvalue The threshold pvalue used for feature selection process. The default value is 0.05.
 #' @param randomTests The number of iterations of the clustering process for computing the cluster stability.
 #' @param trainFraction This parameter determines the ratio of training data. The default value is 0.5.
-#' @param pac.thr
+#' @param pac.thr  The pac.thr is the thresold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.
 #' 
 #' @return A list of cluster labels and a R object of class "fcm {ppclust}"
 #' @examples
