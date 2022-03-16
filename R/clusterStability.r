@@ -32,14 +32,23 @@
 #'   \item dataConcensus - A vector of consensus clustering results of training set.
 #' }
 #' @examples
-#' library(datasets)
-#' data(iris)
+#' // Dataset
+#' // https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
+#' 
+#' Data <- read.csv("C:/Semesters/Thesis/Data/Test Data sets/sobar-72.csv")
 #'
-#' rndSamples <- sample(nrow(iris),100)
-#' trainData <- iris[rndSamples,]
-#' testData <- iris[-rndSamples,]
+#' ClustStab <- clusterStability(data=Data, clustermethod=Mclust, dimenreducmethod="UMAP",n_components = 3,featureselection="YES", 
+#'                              outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,G=3)
 #'
-#' cls <- FuzzyCluster(trainData[,1:4],3)
+#'
+#' ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",n_components = 3,
+#'                               perplexity=5,max_iter=100,k_neighbor=2,featureselection="YES", 
+#'                               outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,k=3)
+#'
+#'
+#' ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="PCA",n_components = 3,
+#'                               featureselection="NO",randomTests = 100,trainFraction = 0.7,center=3)
+#'
 #' @export
 clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NULL,
                              n_components = 3,perplexity = 25,max_iter = 1000,k_neighbor=3,
@@ -215,13 +224,3 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
 }
 
 
-plot.ClusterStability <- function(object,...)
-{
-  plot(as.data.frame(cbind(randindex=object$randIndex,jaccardIndex=object$jaccIndex,meanJaccard=object$meanJaccard)),...)
-  boxplot(as.data.frame(cbind(randindex=object$randIndex,jaccardIndex=object$jaccIndex,meanJaccard=object$meanJaccard)),...)
-}
-
-summary.ClusterStability <- function(object,...)
-{
-  summary(as.data.frame(cbind(randindex=object$randIndex,jaccardIndex=object$jaccIndex,meanJaccard=object$meanJaccard)),...)
-}
