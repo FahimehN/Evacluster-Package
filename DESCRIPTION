@@ -1,12 +1,12 @@
 Package: Evacluster
 Type: Package
-Title: Clustering methods and evaluation metrics for selecting the best number of clusters
+Title: Evaluation Clustering methods for Disease Subtypes Diagnosis
 Version: 0.1.0
 Date: 2022-03-16
 Author: Fahimeh Nezhadmoghadam,Jose Gerardo Tamez-Pena
 Maintainer: Fahimeh Nezhadmoghadam <f.nejad.moghadam@gmail.com>
 Description: Contains a set of clustering methods and evaluation metrics to select the number of the clusters based on clustering stability.
-License: What license is it under?
+License: License: LGPL (>= 2)
 Suggests: EMCluster,inaparc,ppclust,FRESA.CAD,stats,class,NMF,cluster,Rtsne,proxy,uwot
 Encoding: UTF-8
 LazyData: true
