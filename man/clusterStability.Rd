@@ -69,8 +69,8 @@ Feature selection and dimensionality reduction methods can be used before cluste
 the data.
 }
 \examples{
-// Dataset
-// https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
+# Dataset
+# https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
 
 Data <- read.csv("~/sobar-72.csv")
 

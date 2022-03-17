@@ -32,8 +32,8 @@
 #'   \item dataConcensus - A vector of consensus clustering results of training set.
 #' }
 #' @examples
-#' // Dataset
-#' // https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
+#' # Dataset
+#' # https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
 #' 
 #' Data <- read.csv("~/sobar-72.csv")
 #'
