@@ -14,7 +14,7 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",3)
+#' cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",k=3)
 #' @export
 hierarchicalCluster <- function(data=NULL,distmethod=NULL,k=NULL,...)
 {
@@ -32,12 +32,12 @@ hierarchicalCluster <- function(data=NULL,distmethod=NULL,k=NULL,...)
 #' This function predicts the labels of the cluster for new data based on
 #' cluster labels of the training set.
 #'
-#' @param cls A returned object of hierarchicalCluster function
-#' @param  testData A data set of new samples
+#' @param object A returned object of hierarchicalCluster function
+#' @param  newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.hierarchicalCluster <- function(object,...)
+predict.hierarchicalCluster <- function(object,newData=NULL,...)
 {
   parameters <- list(...);
   if(is.null(parameters$kn))
@@ -47,7 +47,7 @@ predict.hierarchicalCluster <- function(object,...)
   else{
     kn <- parameters$kn
   }
-  testData <- parameters[[1]];
+  testData <- newData;
   class <- class::knn(object$Data,testData ,factor(object$classification),kn)
   result <- list(classification=as.integer(as.character(class)))
   return(result);

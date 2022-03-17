@@ -4,12 +4,12 @@
 \alias{kmeansCluster}
 \title{K-means Clustering}
 \usage{
-kmeansCluster(data = NULL, ...)
+kmeansCluster(data = NULL, k = NULL)
 }
 \arguments{
 \item{data}{A Data set}
 
-\item{center}{The number of Clusters}
+\item{k}{The number of Clusters}
 }
 \value{
 A list of cluster labels and a R object of class "kmeans"
@@ -29,5 +29,5 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-cls <- kmeansCluster(trainData[,1:4],3)
+cls <- kmeansCluster(trainData[,1:4],k=3)
 }

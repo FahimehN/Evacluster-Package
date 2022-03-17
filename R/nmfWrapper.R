@@ -13,7 +13,7 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- nmfCluster(trainData[,1:4],3)
+#' cls <- nmfCluster(trainData[,1:4],rank=3)
 #' @export
 nmfCluster <- function(data=NULL,rank=NULL,...)
 {
@@ -35,15 +35,14 @@ nmfCluster <- function(data=NULL,rank=NULL,...)
 #' This function predicts the labels of the cluster for new data based on
 #' cluster labels of the training set.
 #'
-#' @param cls A returned object of nmfCluster
-#' @param testData A data set of new samples
+#' @param object A returned object of nmfCluster
+#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.nmfCluster <- function(object,...)
+predict.nmfCluster <- function(object,newData=NULL)
 {
-  parameters <- list(...);
-  testData <- parameters[[1]];
+  testData <- newData;
 
   nmf <- NMF::nmf(t(testData),object$Rank);
 

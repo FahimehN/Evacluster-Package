@@ -15,11 +15,11 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- pamCluster(trainData[,1:4],3)
+#' cls <- pamCluster(trainData[,1:4],k=3)
 #' @export
-pamCluster <- function(data=NULL,...)
+pamCluster <- function(data=NULL,k=NULL)
 {
-  pm <- cluster::pam(data,...);
+  pm <- cluster::pam(data,k=k);
 
   result <- list(classification = pm$clustering,pam = pm);
   class(result) <- "pamCluster"
@@ -31,15 +31,14 @@ pamCluster <- function(data=NULL,...)
 #' This function predicts the labels of the cluster for new data based on
 #' cluster labels of the training set.
 #'
-#' @param cls A returned object of pamCluster function
-#' @param testData A data set of new samples
+#' @param object A returned object of pamCluster function
+#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.pamCluster <- function(object,...)
+predict.pamCluster <- function(object,newData=NULL)
 {
-  parameters <- list(...);
-  testData <- parameters[[1]];
+  testData <- newData;
   class <- FRESA.CAD::nearestCentroid(testData,object$pam$medoids)
   result <- list(classification=class)
   return(result);

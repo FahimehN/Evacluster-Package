@@ -4,12 +4,12 @@
 \alias{predict.kmeansCluster}
 \title{kmeansCluster prediction function}
 \usage{
-\method{predict}{kmeansCluster}(object, ...)
+\method{predict}{kmeansCluster}(object, newData = NULL)
 }
 \arguments{
-\item{cls}{A returned object of kmeansCluster function}
+\item{object}{A returned object of kmeansCluster function}
 
-\item{testData}{A data set of new samples}
+\item{newData}{A data set of new samples}
 }
 \value{
 A list of cluster labels

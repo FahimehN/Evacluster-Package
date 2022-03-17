@@ -7,7 +7,7 @@
 #' center of mass.
 #'
 #' @param data A Data set
-#' @param center The number of Clusters
+#' @param k The number of Clusters
 #' @return A list of cluster labels and a R object of class "kmeans"
 #' @examples
 #' library(datasets)
@@ -17,11 +17,11 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- kmeansCluster(trainData[,1:4],3)
+#' cls <- kmeansCluster(trainData[,1:4],k=3)
 #' @export
-kmeansCluster <- function(data=NULL,...)
+kmeansCluster <- function(data=NULL,k=NULL)
 {
-  km <- stats::kmeans(data,...);
+  km <- stats::kmeans(data,centers=k);
 
   result <- list(classification = km$cluster,kmeans = km);
   class(result) <- "kmeansCluster"
@@ -33,15 +33,14 @@ kmeansCluster <- function(data=NULL,...)
 #' This function predicts the labels of the cluster for new data based on
 #' cluster labels of the training set.
 #'
-#' @param cls A returned object of kmeansCluster function
-#' @param testData A data set of new samples
+#' @param object A returned object of kmeansCluster function
+#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.kmeansCluster <- function(object,...)
+predict.kmeansCluster <- function(object,newData=NULL)
 {
-  parameters <- list(...);
-  testData <- parameters[[1]];
+  testData <- newData;
   class <- FRESA.CAD::nearestCentroid(testData,object$kmeans$centers)
   result <- list(classification=class)
   return(result);

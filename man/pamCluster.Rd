@@ -4,7 +4,7 @@
 \alias{pamCluster}
 \title{Partitioning Around Medoids (PAM) Clustering}
 \usage{
-pamCluster(data = NULL, ...)
+pamCluster(data = NULL, k = NULL)
 }
 \arguments{
 \item{data}{A Data set}
@@ -27,5 +27,5 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-cls <- pamCluster(trainData[,1:4],3)
+cls <- pamCluster(trainData[,1:4],k=3)
 }

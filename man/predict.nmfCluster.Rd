@@ -4,12 +4,12 @@
 \alias{predict.nmfCluster}
 \title{nmfCluster prediction function}
 \usage{
-\method{predict}{nmfCluster}(object, ...)
+\method{predict}{nmfCluster}(object, newData = NULL)
 }
 \arguments{
-\item{cls}{A returned object of nmfCluster}
+\item{object}{A returned object of nmfCluster}
 
-\item{testData}{A data set of new samples}
+\item{newData}{A data set of new samples}
 }
 \value{
 A list of cluster labels

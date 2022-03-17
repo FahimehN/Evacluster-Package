@@ -4,7 +4,7 @@
 \alias{EMCluster}
 \title{Expectation Maximization Clustering}
 \usage{
-EMCluster(data = NULL, ...)
+EMCluster(data = NULL, k = NULL)
 }
 \arguments{
 \item{data}{A Data set}
@@ -27,5 +27,5 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-clsut <- EMCluster(trainData[,1:4],3)
+clsut <- EMCluster(trainData[,1:4],k=3)
 }

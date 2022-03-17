@@ -4,12 +4,12 @@
 \alias{predict.EMCluster}
 \title{EMCluster prediction function}
 \usage{
-\method{predict}{EMCluster}(object, ...)
+\method{predict}{EMCluster}(object, newData = NULL)
 }
 \arguments{
-\item{cls}{A returned object of EMCluster}
+\item{object}{A returned object of EMCluster}
 
-\item{testData}{A data set of new samples}
+\item{newData}{A data set of new samples}
 }
 \value{
 A list of cluster labels

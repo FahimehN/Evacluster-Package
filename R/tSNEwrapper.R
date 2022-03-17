@@ -20,7 +20,7 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' tsne_trainData <- tsneReductor(trainData,dim = 2,perplexity = 25,max_iter = 1000)
+#' tsne_trainData <- tsneReductor(trainData[,1:4],dim = 2,perplexity = 25,max_iter = 1000)
 #' @export
 tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500,...)
 {
@@ -39,7 +39,7 @@ tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500,...)
 #' @param object   A returned object of tsneReductor function
 #' @param k   The number is used for computing the means of #neighbors with min distance
 #'          (#Neighbor=sqrt(#Samples/k).
-#' @param testData A data set of new samples
+#' @param newData A data set of new samples
 #' 
 #' @return tsneY:An embedding of new data
 #' @examples
@@ -50,16 +50,15 @@ tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500,...)
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' tsne_trainData <- tsneReductor(trainData,dim = 2,perplexity = 25,max_iter = 1000)
+#' tsne_trainData <- tsneReductor(trainData[,1:4],dim = 2,perplexity = 25,max_iter = 1000)
 
 #' tsne_testData <- predict(tsne_trainData,k=3,testData[,1:4])
 #'
 #' @export
 
-predict.tsneReductor <- function(object,k=3,...)
+predict.tsneReductor <- function(object,k=NULL,newData=NULL)
 {
-  parameters <- list(...);
-  testData <- parameters[[1]];
+  testData <- newData;
 
   dist <- proxy::dist(object$Data,testData, method = "euclidean")
 

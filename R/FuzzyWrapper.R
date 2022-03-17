@@ -16,7 +16,7 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- FuzzyCluster(trainData[,1:4],3)
+#' cls <- FuzzyCluster(trainData[,1:4],k=3)
 #' @export
 FuzzyCluster <- function(data=NULL,k=NULL,...)
 {
@@ -34,15 +34,14 @@ FuzzyCluster <- function(data=NULL,k=NULL,...)
 #' This function predicts the labels of the cluster for new data based on
 #' cluster labels of the training set.
 #'
-#' @param cls A returned object of FuzzyCluster function
-#' @param testData A data set of new samples
+#' @param object A returned object of FuzzyCluster function
+#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.FuzzyCluster <- function(object,...)
+predict.FuzzyCluster <- function(object,newData=NULL)
 {
-  parameters <- list(...);
-  testData <- parameters[[1]];
+  testData <- newData;
   class <- FRESA.CAD::nearestCentroid(testData,object$fuzzy$v0)
   result <- list(classification=class)
   return(result);

@@ -28,5 +28,5 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-cls <- FuzzyCluster(trainData[,1:4],3)
+cls <- FuzzyCluster(trainData[,1:4],k=3)
 }

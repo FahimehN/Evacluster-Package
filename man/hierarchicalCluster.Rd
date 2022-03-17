@@ -27,5 +27,5 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",3)
+cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",k=3)
 }

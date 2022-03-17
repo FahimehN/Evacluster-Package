@@ -4,12 +4,12 @@
 \alias{predict.hierarchicalCluster}
 \title{hierarchicalCluster prediction function}
 \usage{
-\method{predict}{hierarchicalCluster}(object, ...)
+\method{predict}{hierarchicalCluster}(object, newData = NULL, ...)
 }
 \arguments{
-\item{cls}{A returned object of hierarchicalCluster function}
+\item{object}{A returned object of hierarchicalCluster function}
 
-\item{testData}{A data set of new samples}
+\item{newData}{A data set of new samples}
 }
 \value{
 A list of cluster labels

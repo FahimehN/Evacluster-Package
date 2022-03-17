@@ -15,11 +15,11 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' clsut <- EMCluster(trainData[,1:4],3)
+#' clsut <- EMCluster(trainData[,1:4],k=3)
 #' @export
-EMCluster <- function(data=NULL,...)
+EMCluster <- function(data=NULL,k=NULL)
 {
-  em <- EMCluster::exhaust.EM(data,...)
+  em <- EMCluster::exhaust.EM(data,nclass=k)
 
   result <- list(classification = as.integer(em$class),EM = em);
   class(result) <- "EMCluster"
@@ -31,15 +31,14 @@ EMCluster <- function(data=NULL,...)
 #' This function predicts the labels of the cluster for new data based on
 #' cluster labels of the training set.
 #'
-#' @param cls A returned object of EMCluster
-#' @param testData A data set of new samples
+#' @param object A returned object of EMCluster
+#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #' 
 #' @export
-predict.EMCluster <- function(object,...)
+predict.EMCluster <- function(object,newData=NULL)
 {
-  parameters <- list(...);
-  testData <- parameters[[1]];
+  testData <- newData;
   pr <- EMCluster::assign.class(testData,object$EM,return.all = FALSE)
   result <- list(classification=pr$class)
   return(result);

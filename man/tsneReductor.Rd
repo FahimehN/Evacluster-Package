@@ -34,5 +34,5 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-tsne_trainData <- tsneReductor(trainData,dim = 2,perplexity = 25,max_iter = 1000)
+tsne_trainData <- tsneReductor(trainData[,1:4],dim = 2,perplexity = 25,max_iter = 1000)
 }

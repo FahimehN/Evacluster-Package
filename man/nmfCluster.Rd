@@ -26,5 +26,5 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-cls <- nmfCluster(trainData[,1:4],3)
+cls <- nmfCluster(trainData[,1:4],rank=3)
 }

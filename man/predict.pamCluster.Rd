@@ -4,12 +4,12 @@
 \alias{predict.pamCluster}
 \title{pamCluster prediction function}
 \usage{
-\method{predict}{pamCluster}(object, ...)
+\method{predict}{pamCluster}(object, newData = NULL)
 }
 \arguments{
-\item{cls}{A returned object of pamCluster function}
+\item{object}{A returned object of pamCluster function}
 
-\item{testData}{A data set of new samples}
+\item{newData}{A data set of new samples}
 }
 \value{
 A list of cluster labels
