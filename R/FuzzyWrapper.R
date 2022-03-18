@@ -18,11 +18,11 @@
 #'
 #' cls <- FuzzyCluster(trainData[,1:4],k=3)
 #' @export
-FuzzyCluster <- function(data=NULL,k=NULL,...)
+FuzzyCluster <- function(data=NULL,k=NULL)
 {
   v <- inaparc::kmpp(data,k)$v
   u <- inaparc::imembrand(nrow(data),k)$u
-  fc <- ppclust::fcm(data,centers=v, memberships=u,...)
+  fc <- ppclust::fcm(data,centers=v, memberships=u)
 
   result <- list(classification = fc$cluster,fuzzy = fc);
   class(result) <- "FuzzyCluster"

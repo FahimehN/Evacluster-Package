@@ -15,10 +15,10 @@
 #'
 #' cls <- nmfCluster(trainData[,1:4],rank=3)
 #' @export
-nmfCluster <- function(data=NULL,rank=NULL,...)
+nmfCluster <- function(data=NULL,rank=NULL)
 {
 
-  nmf <- NMF::nmf(t(data),rank,...);
+  nmf <- NMF::nmf(t(data),rank);
 
   W <- NMF::basis(nmf);#gives the cluster centroids
   H <- NMF::coef(nmf); #gives the cluster membership

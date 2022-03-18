@@ -22,7 +22,7 @@
 #'
 #' tsne_trainData <- tsneReductor(trainData[,1:4],dim = 2,perplexity = 25,max_iter = 1000)
 #' @export
-tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500,...)
+tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500)
 {
   Tsne <- Rtsne::Rtsne(unique(data), dims = dim, perplexity=perplexity, max_iter = max_iter);#, verbose=TRUE
 

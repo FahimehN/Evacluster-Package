@@ -32,24 +32,25 @@
 #'   \item dataConcensus - A vector of consensus clustering results of training set.
 #' }
 #' @examples
+#' \dontrun{
 #' # Dataset
 #' # https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
 #' 
-#' #Data <- read.csv("~/sobar-72.csv")
+#' Data <- read.csv("~/sobar-72.csv")
 #'
-#' #ClustStab <- clusterStability(data=Data, clustermethod=Mclust, dimenreducmethod="UMAP",n_components = 3,featureselection="YES", outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,G=3)
-#'
-#'
-#' #ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",n_components = 3, perplexity=5,max_iter=100,k_neighbor=2,featureselection="YES", outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,k=3)
+#' ClustStab <- clusterStability(data=Data, clustermethod=Mclust, dimenreducmethod="UMAP",n_components = 3,featureselection="yes", outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,G=3)
 #'
 #'
-#' #ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="PCA",n_components = 3, featureselection="NO",randomTests = 100,trainFraction = 0.7,center=3)
+#' ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",n_components = 3, perplexity=5,max_iter=100,k_neighbor=2,featureselection="yes", outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,k=3)
 #'
+#'
+#' ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="PCA",n_components = 3, featureselection="no",randomTests = 100,trainFraction = 0.7,center=3)
+#'}
 #' @export
 clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NULL,
                              n_components = 3,perplexity = 25,max_iter = 1000,k_neighbor=3,
                              featureselection=NULL ,outcome=NULL,fs.pvalue = 0.05, 
-                             randomTests = 20, trainFraction = 0.5,pac.thr=0.1, ...)
+                             randomTests = 20, trainFraction = 0.5,pac.thr=0.1,...)
 {
   clusterLabels <- list();
   randomSamples <- list();
@@ -129,7 +130,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     mod1 <- clustermethod(tempdata[randomSamples[[i]],],...);
     clusterLabels[[i]] <- predict(mod1,tempdata); 
     names(clusterLabels[[i]]$classification) <- rownames(tempdata) #data
-    plot(data[,1:2],col = clusterLabels[[i]]$classification,main=sprintf("%d",i));
+    graphics::plot(data[,1:2],col = clusterLabels[[i]]$classification,main=sprintf("%d",i));
     numberofClusters <- numberofClusters + length(table(clusterLabels[[i]]$classification))
     testCounts[-randomSamples[[i]]] <- testCounts[-randomSamples[[i]]] + 1;
     set.seed(randomSeeds[i]);

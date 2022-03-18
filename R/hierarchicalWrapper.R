@@ -16,10 +16,10 @@
 #'
 #' cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",k=3)
 #' @export
-hierarchicalCluster <- function(data=NULL,distmethod=NULL,k=NULL,...)
+hierarchicalCluster <- function(data=NULL,distmethod=NULL,k=NULL)
 {
   distance= stats::dist(data,distmethod);
-  hc0= stats::hclust(d = distance,...);
+  hc0= stats::hclust(d = distance);
   hc <- stats::cutree(hc0,k);
 
   result <- list(Data = data ,classification = hc);
@@ -33,11 +33,10 @@ hierarchicalCluster <- function(data=NULL,distmethod=NULL,k=NULL,...)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of hierarchicalCluster function
-#' @param  newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.hierarchicalCluster <- function(object,newData=NULL,...)
+predict.hierarchicalCluster <- function(object,...)
 {
   parameters <- list(...);
   if(is.null(parameters$kn))
@@ -47,7 +46,7 @@ predict.hierarchicalCluster <- function(object,newData=NULL,...)
   else{
     kn <- parameters$kn
   }
-  testData <- newData;
+  testData <- parameters[[1]];
   class <- class::knn(object$Data,testData ,factor(object$classification),kn)
   result <- list(classification=as.integer(as.character(class)))
   return(result);

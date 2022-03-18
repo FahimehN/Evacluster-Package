@@ -4,6 +4,7 @@
 #'
 #' @param object A object of "clusterStability" function result
 #' @param who This value shows the consensus clustering result of training and testing sets. If who="training" for training set, otherwise other sets. 
+#' @param thr This is the seq function with three arguments that are: initial value, final value, and increment (or decrement for a declining sequence). This produces ascending or descending sequences.
 #' @return A list of samples' labels with same connectivity.
 #' @examples
 #' Labscluster <- getConsensusCluster(ClustStab,who="training")

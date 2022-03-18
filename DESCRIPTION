@@ -7,7 +7,7 @@ Author: Fahimeh Nezhadmoghadam,Jose Gerardo Tamez-Pena
 Maintainer: Fahimeh Nezhadmoghadam <f.nejad.moghadam@gmail.com>
 Description: Contains a set of clustering methods and evaluation metrics to select the number of the clusters based on clustering stability.
 License: LGPL (>= 2)
-Suggests: EMCluster,inaparc,ppclust,FRESA.CAD,MASS,stats,class,NMF,cluster,Rtsne,proxy,uwot,mclust
+Suggests: EMCluster,inaparc,ppclust,FRESA.CAD,MASS,stats,class,NMF,cluster,Rtsne,proxy,uwot,mclust,graphics
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
