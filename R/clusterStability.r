@@ -71,7 +71,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     {
       message(paste('data Before FS=',nrow(data)))
       
-      FS <- names(univariate_Wilcoxon(data = data[randomSamples[[i]],],
+      FS <- names(FRESA.CAD::univariate_Wilcoxon(data = data[randomSamples[[i]],],
                                       Outcome = outcome,
                                       pvalue = fs.pvalue))
       tempdata <- data.frame(data[,FS])
