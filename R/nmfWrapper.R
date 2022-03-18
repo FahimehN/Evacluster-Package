@@ -20,8 +20,8 @@ nmfCluster <- function(data=NULL,rank=NULL,...)
 
   nmf <- NMF::nmf(t(data),rank,...);
 
-  W <- basis(nmf);#gives the cluster centroids
-  H <- coef(nmf); #gives the cluster membership
+  W <- NMF::basis(nmf);#gives the cluster centroids
+  H <- NMF::coef(nmf); #gives the cluster membership
 
   clusters <- NMF::predict(nmf)
 
@@ -36,17 +36,17 @@ nmfCluster <- function(data=NULL,rank=NULL,...)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of nmfCluster
-#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.nmfCluster <- function(object,newData=NULL)
+predict.nmfCluster <- function(object,...)
 {
-  testData <- newData;
+  parameters <- list(...);
+  testData <- parameters[[1]];
 
   nmf <- NMF::nmf(t(testData),object$Rank);
 
-  W <- basis(nmf);
+  W <- NMF::basis(nmf);
   iW <- MASS::ginv(W)
 
   H <- iW %*% t(testData)

@@ -35,19 +35,15 @@
 #' # Dataset
 #' # https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
 #' 
-#' Data <- read.csv("~/sobar-72.csv")
+#' #Data <- read.csv("~/sobar-72.csv")
 #'
-#' ClustStab <- clusterStability(data=Data, clustermethod=Mclust, dimenreducmethod="UMAP",n_components = 3,featureselection="YES", 
-#'                              outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,G=3)
-#'
-#'
-#' ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",n_components = 3,
-#'                               perplexity=5,max_iter=100,k_neighbor=2,featureselection="YES", 
-#'                               outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,k=3)
+#' #ClustStab <- clusterStability(data=Data, clustermethod=Mclust, dimenreducmethod="UMAP",n_components = 3,featureselection="YES", outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,G=3)
 #'
 #'
-#' ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="PCA",n_components = 3,
-#'                               featureselection="NO",randomTests = 100,trainFraction = 0.7,center=3)
+#' #ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",n_components = 3, perplexity=5,max_iter=100,k_neighbor=2,featureselection="YES", outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,k=3)
+#'
+#'
+#' #ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="PCA",n_components = 3, featureselection="NO",randomTests = 100,trainFraction = 0.7,center=3)
 #'
 #' @export
 clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NULL,
@@ -71,7 +67,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     {
       message(paste('data Before FS=',nrow(data)))
       
-      FS <- names(univariate_Wilcoxon(data = data[randomSamples[[i]],],
+      FS <- names(FRESA.CAD::univariate_Wilcoxon(data = data[randomSamples[[i]],],
                                       Outcome = outcome,
                                       pvalue = fs.pvalue))
       tempdata <- data.frame(data[,FS])
@@ -122,7 +118,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       else if (dimenreducmethod == "PCA")
       {
         pcaData <- stats::prcomp(tempdata[randomSamples[[i]],],rank. = n_components)
-        pcatestData <- predict(pcaData,tempdata[-randomSamples[[i]],])
+        pcatestData <- stats::predict(pcaData,tempdata[-randomSamples[[i]],])
         tempdata[randomSamples[[i]],] <- as.data.frame(pcaData$x)
         tempdata[-randomSamples[[i]],] <- as.data.frame(pcatestData)
         cat("PCA was Done!")
@@ -158,8 +154,8 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       outsamples <- unique(c(randomSamples[[i]],randomSamples[[j]]))
       if ((nrow(data) - length(outsamples)) > 10)
       {
-        randIndex <- c(randIndex,adjustedRandIndex(clusterLabels[[i]]$classification[-outsamples],clusterLabels[[j]]$classification[-outsamples]));
-        jaccard <- jaccardMatrix(clusterLabels[[i]]$classification[-outsamples],clusterLabels[[j]]$classification[-outsamples]);
+        randIndex <- c(randIndex,mclust::adjustedRandIndex(clusterLabels[[i]]$classification[-outsamples],clusterLabels[[j]]$classification[-outsamples]));
+        jaccard <- FRESA.CAD::jaccardMatrix(clusterLabels[[i]]$classification[-outsamples],clusterLabels[[j]]$classification[-outsamples]);
         jaccIndex <- c(jaccIndex,jaccard$balancedMeanJaccard);
         meanJaccard <- c(meanJaccard,mean(jaccard$elementJaccard));
         jaccardpoint[-outsamples] <- jaccardpoint[-outsamples] + jaccard$elementJaccard;
@@ -168,8 +164,8 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       insamples <- randomSamples[[i]][randomSamples[[i]] %in% randomSamples[[j]]]
       if ((nrow(data) - length(insamples)) > 10)
       {
-        trainrandIndex <- c(trainrandIndex,adjustedRandIndex(clusterLabels[[i]]$classification[insamples],clusterLabels[[j]]$classification[insamples]));
-        trainjaccard <- jaccardMatrix(clusterLabels[[i]]$classification[insamples],clusterLabels[[j]]$classification[insamples]);
+        trainrandIndex <- c(trainrandIndex,mclust::adjustedRandIndex(clusterLabels[[i]]$classification[insamples],clusterLabels[[j]]$classification[insamples]));
+        trainjaccard <- FRESA.CAD::jaccardMatrix(clusterLabels[[i]]$classification[insamples],clusterLabels[[j]]$classification[insamples]);
         trainjaccIndex <- c(trainjaccIndex,trainjaccard$balancedMeanJaccard);
         trainmeanJaccard <- c(trainmeanJaccard,mean(trainjaccard$elementJaccard));
         trainjaccardpoint[insamples] <- trainjaccardpoint[insamples] + trainjaccard$elementJaccard;

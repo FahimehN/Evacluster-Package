@@ -32,13 +32,13 @@ EMCluster <- function(data=NULL,k=NULL)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of EMCluster
-#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #' 
 #' @export
-predict.EMCluster <- function(object,newData=NULL)
+predict.EMCluster <- function(object,...)
 {
-  testData <- newData;
+  parameters <- list(...);
+  testData <- parameters[[1]];
   pr <- EMCluster::assign.class(testData,object$EM,return.all = FALSE)
   result <- list(classification=pr$class)
   return(result);

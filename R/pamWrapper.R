@@ -32,13 +32,13 @@ pamCluster <- function(data=NULL,k=NULL)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of pamCluster function
-#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.pamCluster <- function(object,newData=NULL)
+predict.pamCluster <- function(object,...)
 {
-  testData <- newData;
+  parameters <- list(...);
+  testData <- parameters[[1]];
   class <- FRESA.CAD::nearestCentroid(testData,object$pam$medoids)
   result <- list(classification=class)
   return(result);

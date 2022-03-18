@@ -20,7 +20,7 @@ hierarchicalCluster <- function(data=NULL,distmethod=NULL,k=NULL,...)
 {
   distance= stats::dist(data,distmethod);
   hc0= stats::hclust(d = distance,...);
-  hc <- cutree(hc0,k);
+  hc <- stats::cutree(hc0,k);
 
   result <- list(Data = data ,classification = hc);
   class(result) <- "hierarchicalCluster"

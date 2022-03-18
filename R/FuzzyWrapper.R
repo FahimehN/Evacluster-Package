@@ -35,13 +35,13 @@ FuzzyCluster <- function(data=NULL,k=NULL,...)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of FuzzyCluster function
-#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.FuzzyCluster <- function(object,newData=NULL)
+predict.FuzzyCluster <- function(object,...)
 {
-  testData <- newData;
+  parameters <- list(...);
+  testData <- parameters[[1]];
   class <- FRESA.CAD::nearestCentroid(testData,object$fuzzy$v0)
   result <- list(classification=class)
   return(result);

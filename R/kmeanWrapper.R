@@ -34,13 +34,13 @@ kmeansCluster <- function(data=NULL,k=NULL)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of kmeansCluster function
-#' @param newData A data set of new samples
 #' @return A list of cluster labels
 #'
 #' @export
-predict.kmeansCluster <- function(object,newData=NULL)
+predict.kmeansCluster <- function(object,...)
 {
-  testData <- newData;
+  parameters <- list(...);
+  testData <- parameters[[1]];
   class <- FRESA.CAD::nearestCentroid(testData,object$kmeans$centers)
   result <- list(classification=class)
   return(result);
