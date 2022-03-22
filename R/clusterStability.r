@@ -17,7 +17,8 @@
 #' @param randomTests The number of iterations of the clustering process for computing the cluster stability.
 #' @param trainFraction This parameter determines the ratio of training data. The default value is 0.5.
 #' @param pac.thr  The pac.thr is the thresold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.
-#' 
+#' @param \dots Additional arguments passed to clusterStability().
+#'
 #' @return A list with the following elements:
 #' \itemize{
 #'   \item randIndex - A vector of the Rand Index that computes a similarity measure between two clusterings. 
