@@ -5,7 +5,7 @@
 #' is to detect clusters of data and to assign the data to the clusters.
 #'
 #' @param data A Data set
-#' @param k The number of Clusters
+#' @param \dots Additional arguments passed to EMCluster()(Such as the number of Clusters) 
 #' @return A list of cluster labels and a returned object from init.EM
 #' @examples
 #' library(datasets)
@@ -15,12 +15,12 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' clsut <- EMCluster(trainData[,1:4],k=3)
+#' clsut <- EMCluster(trainData[,1:4],3)
 #' @export
-EMCluster <- function(data=NULL,k=NULL)
+EMCluster <- function(data=NULL,...)
 {
-  em <- EMCluster::exhaust.EM(data,nclass=k)
-
+  em <- EMCluster::exhaust.EM(data,...)
+  
   result <- list(classification = as.integer(em$class),EM = em);
   class(result) <- "EMCluster"
   return(result);
@@ -32,6 +32,7 @@ EMCluster <- function(data=NULL,k=NULL)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of EMCluster
+#' @param \dots New sample set
 #' @return A list of cluster labels
 #' 
 #' @export
