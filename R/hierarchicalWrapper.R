@@ -4,7 +4,8 @@
 #'
 #' @param data A Data set
 #' @param distmethod The distance measure to be used. This must be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".
-#' @param k The number of Clusters
+#' @param clusters The number of Clusters
+#' @param \dots Additional parameters passed to  hclust function
 #' @return A list of cluster labels
 #' @examples
 #' library(datasets)
@@ -14,14 +15,15 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",k=3)
+#' cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",clusters=3)
 #' @export
-hierarchicalCluster <- function(data=NULL,distmethod=NULL,k=NULL)
+hierarchicalCluster <- function(data=NULL,distmethod=NULL,clusters=NULL,...)
 {
   distance= stats::dist(data,distmethod);
-  hc0= stats::hclust(d = distance);
+  hc0= stats::hclust(d = distance,...);
+  k <- clusters;
   hc <- stats::cutree(hc0,k);
-
+  
   result <- list(Data = data ,classification = hc);
   class(result) <- "hierarchicalCluster"
   return(result);
@@ -33,6 +35,7 @@ hierarchicalCluster <- function(data=NULL,distmethod=NULL,k=NULL)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of hierarchicalCluster function
+#' @param \dots New samples set
 #' @return A list of cluster labels
 #'
 #' @export

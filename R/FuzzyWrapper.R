@@ -6,7 +6,7 @@
 #' degrees of fuzzy membership between 0 and 1.
 #'
 #' @param data A Data set
-#' @param \dots The number of Clusters
+#' @param \dots k: The number of Clusters
 #' @return A list of cluster labels and a R object of class "fcm {ppclust}"
 #' @examples
 #' library(datasets)
@@ -35,6 +35,7 @@ FuzzyCluster <- function(data=NULL,k=NULL,...)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of FuzzyCluster function
+#' @param \dots New samples set
 #' @return A list of cluster labels
 #'
 #' @export

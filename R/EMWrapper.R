@@ -5,7 +5,7 @@
 #' is to detect clusters of data and to assign the data to the clusters.
 #'
 #' @param data A Data set
-#' @param \dots Additional arguments passed to EMCluster()(Such as the number of Clusters) 
+#' @param \dots The number of Clusters
 #' @return A list of cluster labels and a returned object from init.EM
 #' @examples
 #' library(datasets)

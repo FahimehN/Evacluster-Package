@@ -5,7 +5,7 @@
 #' points as centers
 #'
 #' @param data A Data set
-#' @param k The number of Clusters
+#' @param \dots k: The number of clusters
 #' @return A list of cluster labels and a R object of class "pam {cluster}"
 #' @examples
 #' library(datasets)
@@ -17,10 +17,10 @@
 #'
 #' cls <- pamCluster(trainData[,1:4],k=3)
 #' @export
-pamCluster <- function(data=NULL,k=NULL)
+pamCluster <- function(data=NULL,...)
 {
-  pm <- cluster::pam(data,k=k);
-
+  pm <- cluster::pam(data,...);
+  
   result <- list(classification = pm$clustering,pam = pm);
   class(result) <- "pamCluster"
   return(result);
@@ -32,6 +32,7 @@ pamCluster <- function(data=NULL,k=NULL)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of pamCluster function
+#' @param \dots New samples set
 #' @return A list of cluster labels
 #'
 #' @export

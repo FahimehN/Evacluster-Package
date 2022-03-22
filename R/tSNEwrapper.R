@@ -39,6 +39,7 @@ tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500)
 #' @param object   A returned object of tsneReductor function
 #' @param k   The number is used for computing the means of #neighbors with min distance
 #'          (#Neighbor=sqrt(#Samples/k).
+#' @param \dots New samples set
 #' 
 #' @return tsneY:An embedding of new data
 #' @examples

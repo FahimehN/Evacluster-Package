@@ -7,7 +7,7 @@
 #' center of mass.
 #'
 #' @param data A Data set
-#' @param center The number of Clusters
+#' @param \dots The number of centers
 #' @return A list of cluster labels and a R object of class "kmeans"
 #' @examples
 #' library(datasets)
@@ -17,7 +17,7 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- kmeansCluster(trainData[,1:4],k=3)
+#' cls <- kmeansCluster(trainData[,1:4],center=3)
 #' @export
 kmeansCluster <- function(data=NULL,...)
 {
@@ -34,6 +34,7 @@ kmeansCluster <- function(data=NULL,...)
 #' cluster labels of the training set.
 #'
 #' @param object A returned object of kmeansCluster function
+#' @param \dots New samples set
 #' @return A list of cluster labels
 #'
 #' @export
