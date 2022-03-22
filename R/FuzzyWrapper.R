@@ -6,7 +6,7 @@
 #' degrees of fuzzy membership between 0 and 1.
 #'
 #' @param data A Data set
-#' @param k The number of Clusters
+#' @param \dots The number of Clusters
 #' @return A list of cluster labels and a R object of class "fcm {ppclust}"
 #' @examples
 #' library(datasets)
@@ -18,12 +18,12 @@
 #'
 #' cls <- FuzzyCluster(trainData[,1:4],k=3)
 #' @export
-FuzzyCluster <- function(data=NULL,k=NULL)
+FuzzyCluster <- function(data=NULL,k=NULL,...)
 {
   v <- inaparc::kmpp(data,k)$v
   u <- inaparc::imembrand(nrow(data),k)$u
-  fc <- ppclust::fcm(data,centers=v, memberships=u)
-
+  fc <- ppclust::fcm(data,centers=v, memberships=u,...)
+  
   result <- list(classification = fc$cluster,fuzzy = fc);
   class(result) <- "FuzzyCluster"
   return(result);
