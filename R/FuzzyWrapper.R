@@ -9,6 +9,7 @@
 #' @param \dots k: The number of Clusters
 #' @return A list of cluster labels and a R object of class "fcm {ppclust}"
 #' @examples
+#' \dontrun{
 #' library(datasets)
 #' data(iris)
 #'
@@ -16,9 +17,10 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- FuzzyCluster(trainData[,1:4],k=3)
+#' cls <- FuzzyCluster(trainData[,1:4],3)
+#' }
 #' @export
-FuzzyCluster <- function(data=NULL,k=NULL,...)
+FuzzyCluster <- function(data=NULL,...)
 {
   v <- inaparc::kmpp(data,k)$v
   u <- inaparc::imembrand(nrow(data),k)$u

@@ -7,9 +7,10 @@
 #' center of mass.
 #'
 #' @param data A Data set
-#' @param \dots The number of centers
+#' @param \dots center: The number of centers
 #' @return A list of cluster labels and a R object of class "kmeans"
 #' @examples
+#' \dontrun{
 #' library(datasets)
 #' data(iris)
 #'
@@ -17,7 +18,8 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- kmeansCluster(trainData[,1:4],center=3)
+#' cls <- kmeansCluster(trainData[,1:4],3)
+#'}
 #' @export
 kmeansCluster <- function(data=NULL,...)
 {

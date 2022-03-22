@@ -8,6 +8,7 @@
 #' @param \dots k: The number of clusters
 #' @return A list of cluster labels and a R object of class "pam {cluster}"
 #' @examples
+#' \dontrun{
 #' library(datasets)
 #' data(iris)
 #'
@@ -15,7 +16,8 @@
 #' trainData <- iris[rndSamples,]
 #' testData <- iris[-rndSamples,]
 #'
-#' cls <- pamCluster(trainData[,1:4],k=3)
+#' cls <- pamCluster(trainData[,1:4],3)
+#' }
 #' @export
 pamCluster <- function(data=NULL,...)
 {

@@ -39,27 +39,26 @@
 #' 
 #' Data <- read.csv("~/sobar-72.csv")
 #'
-#' ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="UMAP",
-#'                               n_components = 3,
-#'                               featureselection="yes", outcome="ca_cervix",
-#'                               fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)
+#' ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="UMAP",\cr
+#'                               n_components = 3,featureselection="yes", outcome="ca_cervix",\cr
+#'                               fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)\cr
 #'
 #'
-#' ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",
-#'                               n_components = 3, perplexity=5,max_iter=100,k_neighbor=2,
-#'                               featureselection="yes", outcome="ca_cervix",fs.pvalue = 0.05,
-#'                               randomTests = 100,trainFraction = 0.7,k=3)
+#' ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",\cr
+#'                               n_components = 3, perplexity=5,max_iter=100,k_neighbor=2,\cr
+#'                               featureselection="yes", outcome="ca_cervix",fs.pvalue = 0.05,\cr
+#'                               randomTests = 100,trainFraction = 0.7,k=3)\cr
 #'
 #'
-#' ClustStab <- clusterStability(data=Data, clustermethod=hierarchicalCluster, dimenreducmethod="PCA",
-#'                               n_components = 3,featureselection="no",randomTests = 100,trainFraction = 0.7,
-#'                               distmethod="euclidean",clusters=3)
+#' ClustStab <- clusterStability(data=Data, clustermethod=hierarchicalCluster, dimenreducmethod="PCA",\cr
+#'                               n_components = 3,featureselection="no",randomTests = 100,\cr
+#'                               trainFraction = 0.7,distmethod="euclidean",clusters=3)\cr
 #'
 #'}
 #' @export
-clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod="UMAP",
+clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NULL,
                              n_components = 3,perplexity = 25,max_iter = 1000,k_neighbor=3,
-                             featureselection="yes" ,outcome=NULL,fs.pvalue = 0.05,
+                             featureselection=NULL ,outcome=NULL,fs.pvalue = 0.05,
                              randomTests = 20, trainFraction = 0.5,pac.thr=0.1,...)
 {
   clusterLabels <- list();

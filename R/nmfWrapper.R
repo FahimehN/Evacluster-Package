@@ -4,9 +4,10 @@
 #'  and H the cluster membership,
 #' @param data A Data set
 #' @param rank Specification of the factorization rank
-#' @param \dots Additional parameters passed to nmf function
+#'
 #' @return A list of cluster labels, a R object of class "nmf" and the centers of the clusters
 #' @examples
+#' ' \dontrun{
 #' library(datasets)
 #' data(iris)
 #'
@@ -15,11 +16,12 @@
 #' testData <- iris[-rndSamples,]
 #'
 #' cls <- nmfCluster(trainData[,1:4],rank=3)
+#' }
 #' @export
-nmfCluster <- function(data=NULL,rank=NULL,...)
+nmfCluster <- function(data=NULL,rank=NULL)
 {
   
-  nmf <- NMF::nmf(t(data),rank,...);
+  nmf <- NMF::nmf(t(data),rank);
   
   W <- NMF::basis(nmf);#gives the cluster centroids
   H <- NMF::coef(nmf); #gives the cluster membership
