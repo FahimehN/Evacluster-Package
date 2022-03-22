@@ -2,7 +2,7 @@ Package: Evacluster
 Type: Package
 Title: Evaluation Clustering Methods for Disease Subtypes Diagnosis
 Version: 0.1.0
-Date: 2022-03-16
+Date: 2022-03-22
 Author: Fahimeh Nezhadmoghadam,Jose Gerardo Tamez-Pena
 Maintainer: Fahimeh Nezhadmoghadam <f.nejad.moghadam@gmail.com>
 Description: Contains a set of clustering methods and evaluation metrics to select the number of the clusters based on clustering stability.

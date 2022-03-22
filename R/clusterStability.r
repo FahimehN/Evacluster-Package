@@ -40,7 +40,8 @@
 #' Data <- read.csv("~/sobar-72.csv")
 #'
 #' ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="UMAP",
-#'                               n_components = 3,featureselection="yes", outcome="ca_cervix",
+#'                               n_components = 3,
+#'                               featureselection="yes", outcome="ca_cervix",
 #'                               fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)
 #'
 #'
