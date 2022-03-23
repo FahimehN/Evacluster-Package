@@ -2,7 +2,7 @@
 #'
 #' This function perform EM algorithm for model-based clustering of finite
 #' mixture multivariate Gaussian distribution.The general purpose of clustering
-#' is to detect clusters of data and to assign the data to the clusters.
+#' is to detect clusters of data and to assign the data to the clusters."TEST TEST TEST"
 #'
 #' @param data A Data set
 #' @param \dots The number of Clusters
