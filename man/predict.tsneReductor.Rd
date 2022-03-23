@@ -4,7 +4,7 @@
 \alias{predict.tsneReductor}
 \title{tsneReductor prediction function}
 \usage{
-\method{predict}{tsneReductor}(object, k = NULL, newData = NULL)
+\method{predict}{tsneReductor}(object, k = 3, ...)
 }
 \arguments{
 \item{object}{A returned object of tsneReductor function}
@@ -12,7 +12,7 @@
 \item{k}{The number is used for computing the means of #neighbors with min distance
 (#Neighbor=sqrt(#Samples/k).}
 
-\item{newData}{A data set of new samples}
+\item{\dots}{New samples set}
 }
 \value{
 tsneY:An embedding of new data

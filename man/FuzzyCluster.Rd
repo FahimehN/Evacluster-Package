@@ -4,12 +4,12 @@
 \alias{FuzzyCluster}
 \title{Fuzzy C-means Clustering Algorithm}
 \usage{
-FuzzyCluster(data = NULL, k = NULL, ...)
+FuzzyCluster(data = NULL, ...)
 }
 \arguments{
 \item{data}{A Data set}
 
-\item{k}{The number of Clusters}
+\item{\dots}{k: The number of Clusters}
 }
 \value{
 A list of cluster labels and a R object of class "fcm {ppclust}"
@@ -21,6 +21,7 @@ the data point. A data object is the member of all clusters with varying
 degrees of fuzzy membership between 0 and 1.
 }
 \examples{
+\dontrun{
 library(datasets)
 data(iris)
 
@@ -28,5 +29,6 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-cls <- FuzzyCluster(trainData[,1:4],k=3)
+cls <- FuzzyCluster(trainData[,1:4],3)
+}
 }

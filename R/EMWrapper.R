@@ -2,13 +2,12 @@
 #'
 #' This function perform EM algorithm for model-based clustering of finite
 #' mixture multivariate Gaussian distribution.The general purpose of clustering
-#' is to detect clusters of data and to assign the data to the clusters."TEST TEST TEST"
+#' is to detect clusters of data and to assign the data to the clusters.
 #'
 #' @param data A Data set
-#' @param \dots The number of Clusters
+#' @param \dots k: The number of Clusters
 #' @return A list of cluster labels and a returned object from init.EM
 #' @examples
-#' \dontrun{
 #' library(datasets)
 #' data(iris)
 #'
@@ -17,7 +16,6 @@
 #' testData <- iris[-rndSamples,]
 #'
 #' clsut <- EMCluster(trainData[,1:4],3)
-#' }
 #' @export
 EMCluster <- function(data=NULL,...)
 {

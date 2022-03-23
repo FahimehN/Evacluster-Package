@@ -10,6 +10,8 @@ getConsensusCluster(object, who = "training", thr = seq(0.8, 0.3, -0.1))
 \item{object}{A object of "clusterStability" function result}
 
 \item{who}{This value shows the consensus clustering result of training and testing sets. If who="training" for training set, otherwise other sets.}
+
+\item{thr}{This is the seq function with three arguments that are: initial value, final value, and increment (or decrement for a declining sequence). This produces ascending or descending sequences.}
 }
 \value{
 A list of samples' labels with same connectivity.

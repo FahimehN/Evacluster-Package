@@ -4,12 +4,12 @@
 \alias{predict.FuzzyCluster}
 \title{FuzzyCluster prediction function}
 \usage{
-\method{predict}{FuzzyCluster}(object, newData = NULL)
+\method{predict}{FuzzyCluster}(object, ...)
 }
 \arguments{
 \item{object}{A returned object of FuzzyCluster function}
 
-\item{newData}{A data set of new samples}
+\item{\dots}{New samples set}
 }
 \value{
 A list of cluster labels

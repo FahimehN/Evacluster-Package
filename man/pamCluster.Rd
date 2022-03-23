@@ -4,12 +4,12 @@
 \alias{pamCluster}
 \title{Partitioning Around Medoids (PAM) Clustering}
 \usage{
-pamCluster(data = NULL, k = NULL)
+pamCluster(data = NULL, ...)
 }
 \arguments{
 \item{data}{A Data set}
 
-\item{k}{The number of Clusters}
+\item{\dots}{k: The number of clusters}
 }
 \value{
 A list of cluster labels and a R object of class "pam {cluster}"
@@ -20,6 +20,7 @@ In contrast to the k-means algorithm, this clustering methods chooses actual dat
 points as centers
 }
 \examples{
+\dontrun{
 library(datasets)
 data(iris)
 
@@ -27,5 +28,6 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-cls <- pamCluster(trainData[,1:4],k=3)
+cls <- pamCluster(trainData[,1:4],3)
+}
 }

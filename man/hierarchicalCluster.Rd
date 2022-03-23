@@ -4,14 +4,16 @@
 \alias{hierarchicalCluster}
 \title{hierarchical clustering}
 \usage{
-hierarchicalCluster(data = NULL, distmethod = NULL, k = NULL, ...)
+hierarchicalCluster(data = NULL, distmethod = NULL, clusters = NULL, ...)
 }
 \arguments{
 \item{data}{A Data set}
 
 \item{distmethod}{The distance measure to be used. This must be one of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski".}
 
-\item{k}{The number of Clusters}
+\item{clusters}{The number of Clusters}
+
+\item{\dots}{Additional parameters passed to  hclust function}
 }
 \value{
 A list of cluster labels
@@ -20,6 +22,7 @@ A list of cluster labels
 This function seeks to build a hierarchy of clusters
 }
 \examples{
+\dontrun{
 library(datasets)
 data(iris)
 
@@ -27,5 +30,6 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",k=3)
+cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",clusters=3)
+}
 }

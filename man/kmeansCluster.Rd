@@ -4,12 +4,12 @@
 \alias{kmeansCluster}
 \title{K-means Clustering}
 \usage{
-kmeansCluster(data = NULL, k = NULL)
+kmeansCluster(data = NULL, ...)
 }
 \arguments{
 \item{data}{A Data set}
 
-\item{k}{The number of Clusters}
+\item{\dots}{center: The number of centers}
 }
 \value{
 A list of cluster labels and a R object of class "kmeans"
@@ -22,6 +22,7 @@ a new data point can be assigned a cluster (class) based on the closed
 center of mass.
 }
 \examples{
+\dontrun{
 library(datasets)
 data(iris)
 
@@ -29,5 +30,6 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-cls <- kmeansCluster(trainData[,1:4],k=3)
+cls <- kmeansCluster(trainData[,1:4],3)
+}
 }

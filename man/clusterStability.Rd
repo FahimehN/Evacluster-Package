@@ -47,6 +47,8 @@ clusterStability(
 \item{trainFraction}{This parameter determines the ratio of training data. The default value is 0.5.}
 
 \item{pac.thr}{The pac.thr is the thresold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.}
+
+\item{\dots}{Additional arguments passed to clusterStability().}
 }
 \value{
 A list with the following elements:
@@ -69,21 +71,26 @@ Feature selection and dimensionality reduction methods can be used before cluste
 the data.
 }
 \examples{
+\dontrun{
 # Dataset
 # https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
 
 Data <- read.csv("~/sobar-72.csv")
 
-ClustStab <- clusterStability(data=Data, clustermethod=Mclust, dimenreducmethod="UMAP",n_components = 3,featureselection="YES", 
-                             outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,G=3)
+ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="UMAP",\cr
+                              n_components = 3,featureselection="yes", outcome="ca_cervix",\cr
+                              fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)\cr
 
 
-ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",n_components = 3,
-                              perplexity=5,max_iter=100,k_neighbor=2,featureselection="YES", 
-                              outcome="ca_cervix",fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,k=3)
+ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",\cr
+                              n_components = 3, perplexity=5,max_iter=100,k_neighbor=2,\cr
+                              featureselection="yes", outcome="ca_cervix",fs.pvalue = 0.05,\cr
+                              randomTests = 100,trainFraction = 0.7,k=3)\cr
 
 
-ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="PCA",n_components = 3,
-                              featureselection="NO",randomTests = 100,trainFraction = 0.7,center=3)
+ClustStab <- clusterStability(data=Data, clustermethod=hierarchicalCluster, dimenreducmethod="PCA",\cr
+                              n_components = 3,featureselection="no",randomTests = 100,\cr
+                              trainFraction = 0.7,distmethod="euclidean",clusters=3)\cr
 
+}
 }

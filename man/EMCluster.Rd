@@ -4,12 +4,12 @@
 \alias{EMCluster}
 \title{Expectation Maximization Clustering}
 \usage{
-EMCluster(data = NULL, k = NULL)
+EMCluster(data = NULL, ...)
 }
 \arguments{
 \item{data}{A Data set}
 
-\item{k}{The number of Clusters}
+\item{\dots}{k: The number of Clusters}
 }
 \value{
 A list of cluster labels and a returned object from init.EM
@@ -27,5 +27,5 @@ rndSamples <- sample(nrow(iris),100)
 trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
-clsut <- EMCluster(trainData[,1:4],k=3)
+clsut <- EMCluster(trainData[,1:4],3)
 }

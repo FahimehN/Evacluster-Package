@@ -4,7 +4,7 @@
 \alias{tsneReductor}
 \title{t-Distributed Stochastic Neighbor Embedding (t-SNE)}
 \usage{
-tsneReductor(data = NULL, dim = 2, perplexity = 30, max_iter = 500, ...)
+tsneReductor(data = NULL, dim = 2, perplexity = 30, max_iter = 500)
 }
 \arguments{
 \item{data}{Data matrix (each row is an observation, each column is a variable)}
