@@ -22,6 +22,9 @@
 #' @export
 FuzzyCluster <- function(data=NULL,...)
 {
+  parameters <- list(...);
+  k <- parameters$k;
+
   v <- inaparc::kmpp(data,k)$v
   u <- inaparc::imembrand(nrow(data),k)$u
   fc <- ppclust::fcm(data,centers=v, memberships=u,...)

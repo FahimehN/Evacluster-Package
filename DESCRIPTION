@@ -9,5 +9,5 @@ Description: Contains a set of clustering methods and evaluation metrics to sele
 License: LGPL (>= 2)
 Suggests: EMCluster,inaparc,ppclust,FRESA.CAD,MASS,stats,class,NMF,cluster,Rtsne,proxy,uwot,mclust,graphics
 Encoding: UTF-8
-LazyData: true
+Packaged: 2022-03-24 20:01:22 UTC; 
 RoxygenNote: 7.1.1
