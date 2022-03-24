@@ -27,6 +27,7 @@ constructs a low-dimensional embedding of high-dimensional
 data, distances, or similarities.
 }
 \examples{
+\dontrun{
 library(datasets)
 data(iris)
 
@@ -35,4 +36,5 @@ trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
 tsne_trainData <- tsneReductor(trainData[,1:4],dim = 2,perplexity = 25,max_iter = 1000)
+}
 }

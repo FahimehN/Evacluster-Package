@@ -13,6 +13,7 @@
 #' @return tsneY: A Matrix containing the new representations for the observation
 #'          with selected dimensions by user
 #' @examples
+#' \dontrun{
 #' library(datasets)
 #' data(iris)
 #'
@@ -21,6 +22,7 @@
 #' testData <- iris[-rndSamples,]
 #'
 #' tsne_trainData <- tsneReductor(trainData[,1:4],dim = 2,perplexity = 25,max_iter = 1000)
+#' }
 #' @export
 tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500)
 {

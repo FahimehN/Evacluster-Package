@@ -50,9 +50,10 @@
 #'                               randomTests = 100,trainFraction = 0.7,k=3)\cr
 #'
 #'
-#' ClustStab <- clusterStability(data=Data, clustermethod=hierarchicalCluster, dimenreducmethod="PCA",\cr
-#'                               n_components = 3,featureselection="no",randomTests = 100,\cr
-#'                               trainFraction = 0.7,distmethod="euclidean",clusters=3)\cr
+#' ClustStab <- clusterStability(data=Data, clustermethod=hierarchicalCluster, \cr
+#'                               dimenreducmethod="PCA", n_components = 3,featureselection="no",\cr
+#'                               ,randomTests = 100,trainFraction = 0.7,distmethod="euclidean",\cr
+#'                               clusters=3)
 #'
 #'}
 #' @export
