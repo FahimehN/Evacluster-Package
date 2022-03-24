@@ -4,7 +4,7 @@
 \alias{predict.tsneReductor}
 \title{tsneReductor prediction function}
 \usage{
-\method{predict}{tsneReductor}(object, k = 3, ...)
+\method{predict}{tsneReductor}(object, k = NULL, ...)
 }
 \arguments{
 \item{object}{A returned object of tsneReductor function}
@@ -21,14 +21,18 @@ tsneY:An embedding of new data
 This function performs an embedding of new data using an existing embedding.
 }
 \examples{
-library(datasets)
-data(iris)
+\dontrun{
+# Dataset
+# https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
 
-rndSamples <- sample(nrow(iris),100)
-trainData <- iris[rndSamples,]
-testData <- iris[-rndSamples,]
+Data <- read.csv("~/sobar-72.csv")
 
-tsne_trainData <- tsneReductor(trainData[,1:4],dim = 2,perplexity = 25,max_iter = 1000)
-tsne_testData <- predict(tsne_trainData,k=3,testData[,1:4])
+rndSamples <- sample(nrow(Data),50)
+trainData <- Data[rndSamples,]
+testData <- Data[-rndSamples,]
 
+tsne_trainData <- tsneReductor(trainData[,1:19],dim = 3,perplexity = 5,max_iter = 1000)
+
+tsne_testData <- predict(tsne_trainData,k=3,testData[,1:19])
+}
 }

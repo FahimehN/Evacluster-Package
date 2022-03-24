@@ -14,14 +14,16 @@
 #'          with selected dimensions by user
 #' @examples
 #' \dontrun{
-#' library(datasets)
-#' data(iris)
+#' # Dataset
+#' # https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
+#' 
+#' Data <- read.csv("~/sobar-72.csv")
 #'
-#' rndSamples <- sample(nrow(iris),100)
-#' trainData <- iris[rndSamples,]
-#' testData <- iris[-rndSamples,]
+#' rndSamples <- sample(nrow(Data),50)
+#' trainData <- Data[rndSamples,]
+#' testData <- Data[-rndSamples,]
 #'
-#' tsne_trainData <- tsneReductor(trainData[,1:4],dim = 2,perplexity = 25,max_iter = 1000)
+#' tsne_trainData <- tsneReductor(trainData[,1:19],dim = 3,perplexity = 5,max_iter = 1000)
 #' }
 #' @export
 tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500)
@@ -45,20 +47,23 @@ tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500)
 #' 
 #' @return tsneY:An embedding of new data
 #' @examples
-#' library(datasets)
-#' data(iris)
+#' \dontrun{
+#' # Dataset
+#' # https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
+#' 
+#' Data <- read.csv("~/sobar-72.csv")
 #'
-#' rndSamples <- sample(nrow(iris),100)
-#' trainData <- iris[rndSamples,]
-#' testData <- iris[-rndSamples,]
+#' rndSamples <- sample(nrow(Data),50)
+#' trainData <- Data[rndSamples,]
+#' testData <- Data[-rndSamples,]
 #'
-#' tsne_trainData <- tsneReductor(trainData[,1:4],dim = 2,perplexity = 25,max_iter = 1000)
-
-#' tsne_testData <- predict(tsne_trainData,k=3,testData[,1:4])
-#'
+#' tsne_trainData <- tsneReductor(trainData[,1:19],dim = 3,perplexity = 5,max_iter = 1000)
+#' 
+#' tsne_testData <- predict(tsne_trainData,k=3,testData[,1:19])
+#'}
 #' @export
 
-predict.tsneReductor <- function(object,k=3,...)
+predict.tsneReductor <- function(object,k=NULL,...)
 {
   parameters <- list(...);
   testData <- parameters[[1]];
