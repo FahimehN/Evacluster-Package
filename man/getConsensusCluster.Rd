@@ -20,6 +20,16 @@ A list of samples' labels with same connectivity.
 This function gets the labels of the subjects that share the same connectivity.
 }
 \examples{
-Labscluster <- getConsensusCluster(ClustStab,who="training")
+\dontrun{
+# Dataset
+# https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
 
+Data <- read.csv("~/sobar-72.csv")
+
+ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="UMAP",\cr
+                              n_components = 3,featureselection="yes", outcome="ca_cervix",\cr
+                              fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)\cr
+
+clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
+}
 }

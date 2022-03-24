@@ -17,7 +17,7 @@
 #'                               n_components = 3,featureselection="yes", outcome="ca_cervix",\cr
 #'                               fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)\cr
 #'
-#' clusterLabels <- getConsensusCluster(ClustStab,who="training")
+#' clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
 #' }
 #' @export
 getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
