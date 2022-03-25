@@ -56,11 +56,13 @@ A list with the following elements:
   \item randIndex - A vector of the Rand Index that computes a similarity measure between two clusterings. 
   \item jaccIndex - A vector of jaccard Index that measures how frequently pairs of items are joined together in two clustering data sets.
   \item randomSamples - A vector with indexes of selected samples for training in each iteration.
-  \item clusterLabels - A vector with clusters' labels in all iterations.
+  \item clusterLabels - A vector with clusters' labels in all iterations. jaccardpoint
+  \item jaccardpoint - The corresponding Jaccard index for each data point of testing set
   \item averageNumberofClusters - The mean Number of Clusters.
   \item testConsesus - A vector of consensus clustering results of testing set.
   \item trainRandIndex - A vector of the Rand Index for training set.
   \item trainJaccIndex - A vector of the jaccard Index for training set.
+  \item trainJaccardpoint - The corresponding Jaccard index for each data point of training set.
   \item PAC - The proportion of ambiguous clustering (PAC) score.
   \item dataConcensus - A vector of consensus clustering results of training set.
 }

@@ -117,20 +117,54 @@ Maintainer: <f.nejad.moghadam@gmail.com>
                               n_components = 3,featureselection="yes", outcome="Class",
                               fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)
    
+   
+   # Get the labels of the subjects that share the same connectivity
+   clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
+
+
      # Compute the stability of clustering using PAM clustering, tSNE as dimensionality reduction method, and feature selection technique
      
    ClustStab <- clusterStability(data=Sonar, clustermethod=pamCluster, dimenreducmethod="tSNE",
                               n_components = 3, perplexity=10,max_iter=100,k_neighbor=2,
                              featureselection="yes", outcome="Class",fs.pvalue = 0.05,
                                randomTests = 100,trainFraction = 0.7,k=3)
-                               
+          
+    # Get the labels of the subjects that share the same connectivity
+   clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
+                     
+                     
+                     
     # Compute the stability of clustering using hierarchical clustering, PCA as dimensionality reduction method, and without applying feature selection
                                  
    ClustStab <- clusterStability(data=Sonar, clustermethod=hierarchicalCluster, 
                                dimenreducmethod="PCA", n_components = 3,featureselection="no",
                                randomTests = 100,trainFraction = 0.7,distmethod="euclidean", 
                                clusters=3)
+                               
+ # Get the labels of the subjects that share the same connectivity
+   clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
+   
+   
+   # Show the clustering stability resuldts
+   mycolors <- c("red","green","blue","yellow")
  
+   ordermatrix <- ClustStab$dataConcensus
+ 
+   heatmapsubsample <- sample(nrow(ordermatrix),70)
+ 
+   orderindex <- 10*clusterLabels + ClustStab$trainJaccardpoint
+ 
+   orderindex <- orderindex[heatmapsubsample]
+   orderindex <- order(orderindex)
+   ordermatrix <- ordermatrix[heatmapsubsample,heatmapsubsample]
+   ordermatrix <- ordermatrix[orderindex,orderindex]
+   rowcolors <- mycolors[1+clusterLabels[heatmapsubsample]]
+   rowcolors <- rowcolors[orderindex]
+ 
+ 
+   hplot <- gplots::heatmap.2(as.matrix(ordermatrix),Rowv=FALSE,Colv=FALSE,
+                            RowSideColors = rowcolors,ColSideColors = rowcolors,dendrogram = "none",
+                            trace="none",main="Cluster Co-Association \n (k=3)")
 
    }
 }
