@@ -23,7 +23,7 @@
 FuzzyCluster <- function(data=NULL,...)
 {
   parameters <- list(...);
-  k <- parameters$k;
+  k <- parameters[[1]];
 
   v <- inaparc::kmpp(data,k)$v
   u <- inaparc::imembrand(nrow(data),k)$u
