@@ -7,7 +7,6 @@
 Contains a set of clustering methods and evaluation metrics to select the best number of the clusters based on clustering stability.
 }
 
-
 \details{
     \tabular{ll}{
         Package: \tab Evacluster\cr
@@ -135,7 +134,6 @@ Maintainer: <f.nejad.moghadam@gmail.com>
    clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
                      
                      
-                     
     # Compute the stability of clustering using hierarchical clustering,
     PCA as dimensionality reduction method, and without applying feature selection
                                  
@@ -168,7 +166,6 @@ Maintainer: <f.nejad.moghadam@gmail.com>
    hplot <- gplots::heatmap.2(as.matrix(ordermatrix),Rowv=FALSE,Colv=FALSE,
                             RowSideColors = rowcolors,ColSideColors = rowcolors,dendrogram = "none",
                             trace="none",main="Cluster Co-Association \n (k=3)")
-
    }
 }
 \keyword{package}
