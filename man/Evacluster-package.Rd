@@ -42,7 +42,8 @@ Maintainer: <f.nejad.moghadam@gmail.com>
    # Perform Expectation Maximization Clustering on training set with 3 clusters 
    clsut <- EMCluster(trainData[,1:4],3)
    
-   # Predict the labels of the cluster for new data based on cluster labels of the training set
+   # Predict the labels of the cluster for new data based on cluster labels 
+   of the training set
    pre <- predict(clsut,testData[,1:4])
    
    
@@ -111,7 +112,8 @@ Maintainer: <f.nejad.moghadam@gmail.com>
    Sonar$Class[Sonar$Class == 1] <- 0
    Sonar$Class[Sonar$Class == 2] <- 1
    
-   # Compute the stability of clustering using kmeans clustering, UMAP as dimensionality reduction method, and feature selection technique
+   # Compute the stability of clustering using kmeans clustering, UMAP as 
+   dimensionality reduction method, and feature selection technique
    
   ClustStab <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",
                               n_components = 3,featureselection="yes", outcome="Class",
@@ -122,7 +124,8 @@ Maintainer: <f.nejad.moghadam@gmail.com>
    clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
 
 
-     # Compute the stability of clustering using PAM clustering, tSNE as dimensionality reduction method, and feature selection technique
+     # Compute the stability of clustering using PAM clustering, tSNE as
+     dimensionality reduction method, and feature selection technique
      
    ClustStab <- clusterStability(data=Sonar, clustermethod=pamCluster, dimenreducmethod="tSNE",
                               n_components = 3, perplexity=10,max_iter=100,k_neighbor=2,
@@ -134,7 +137,8 @@ Maintainer: <f.nejad.moghadam@gmail.com>
                      
                      
                      
-    # Compute the stability of clustering using hierarchical clustering, PCA as dimensionality reduction method, and without applying feature selection
+    # Compute the stability of clustering using hierarchical clustering,
+    PCA as dimensionality reduction method, and without applying feature selection
                                  
    ClustStab <- clusterStability(data=Sonar, clustermethod=hierarchicalCluster, 
                                dimenreducmethod="PCA", n_components = 3,featureselection="no",
