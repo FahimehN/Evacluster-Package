@@ -24,7 +24,7 @@ clusterStability(
 \arguments{
 \item{data}{A Data set}
 
-\item{clustermethod}{The clustering method. This must be one of "Mclust","pamCluster","kmeansCluster", "hierarchicalCluster",and "FuzzyCluster".}
+\item{clustermethod}{The clustering method. This can be one of "Mclust","pamCluster","kmeansCluster", "hierarchicalCluster",and "FuzzyCluster".}
 
 \item{dimenreducmethod}{The dimensionality reduction method. This must be one of "UMAP","tSNE", and "PCA".}
 
@@ -72,25 +72,27 @@ the data.
 }
 \examples{
 \dontrun{
-# Dataset
-# https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
+library(mlbench)
+data(Sonar)
 
-Data <- read.csv("~/sobar-72.csv")
+Sonar$Class <- as.numeric(Sonar$Class)
+Sonar$Class[Sonar$Class == 1] <- 0 
+Sonar$Class[Sonar$Class == 2] <- 1
 
-ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="UMAP",\cr
-                              n_components = 3,featureselection="yes", outcome="ca_cervix",\cr
+ClustStab <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",\cr
+                              n_components = 3,featureselection="yes", outcome="Class",\cr
                               fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)\cr
 
 
-ClustStab <- clusterStability(data=Data, clustermethod=pamCluster, dimenreducmethod="tSNE",\cr
-                              n_components = 3, perplexity=5,max_iter=100,k_neighbor=2,\cr
-                              featureselection="yes", outcome="ca_cervix",fs.pvalue = 0.05,\cr
+ClustStab <- clusterStability(data=Sonar, clustermethod=pamCluster, dimenreducmethod="tSNE",\cr
+                              n_components = 3, perplexity=10,max_iter=100,k_neighbor=2,\cr
+                              featureselection="yes", outcome="Class",fs.pvalue = 0.05,\cr
                               randomTests = 100,trainFraction = 0.7,k=3)\cr
 
 
-ClustStab <- clusterStability(data=Data, clustermethod=hierarchicalCluster, \cr
+ClustStab <- clusterStability(data=Sonar, clustermethod=hierarchicalCluster, \cr
                               dimenreducmethod="PCA", n_components = 3,featureselection="no",\cr
-                              ,randomTests = 100,trainFraction = 0.7,distmethod="euclidean",\cr
+                              randomTests = 100,trainFraction = 0.7,distmethod="euclidean",\cr
                               clusters=3)
 
 }

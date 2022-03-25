@@ -21,13 +21,15 @@ This function gets the labels of the subjects that share the same connectivity.
 }
 \examples{
 \dontrun{
-# Dataset
-# https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
+library(mlbench)
+data(Sonar)
 
-Data <- read.csv("~/sobar-72.csv")
+Sonar$Class <- as.numeric(Sonar$Class)
+Sonar$Class[Sonar$Class == 1] <- 0 
+Sonar$Class[Sonar$Class == 2] <- 1
 
-ClustStab <- clusterStability(data=Data, clustermethod=kmeansCluster, dimenreducmethod="UMAP",\cr
-                              n_components = 3,featureselection="yes", outcome="ca_cervix",\cr
+ClustStab <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",\cr
+                              n_components = 3,featureselection="yes", outcome="Class",\cr
                               fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)\cr
 
 clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))

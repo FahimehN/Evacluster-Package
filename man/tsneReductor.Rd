@@ -28,15 +28,14 @@ data, distances, or similarities.
 }
 \examples{
 \dontrun{
-# Dataset
-# https://archive.ics.uci.edu/ml/machine-learning-databases/00537/
+library(mlbench)
+data(Sonar)
 
-Data <- read.csv("~/sobar-72.csv")
+rndSamples <- sample(nrow(Sonar),150)
+trainData <- Sonar[rndSamples,]
+testData <- Sonar[-rndSamples,]
 
-rndSamples <- sample(nrow(Data),50)
-trainData <- Data[rndSamples,]
-testData <- Data[-rndSamples,]
+tsne_trainData <- tsneReductor(trainData[,1:60],dim = 3,perplexity = 10,max_iter = 1000)
 
-tsne_trainData <- tsneReductor(trainData[,1:19],dim = 3,perplexity = 5,max_iter = 1000)
 }
 }

@@ -38,24 +38,99 @@ Maintainer: <f.nejad.moghadam@gmail.com>
    testData <- iris[-rndSamples,]
 
   
-   # Perform Expectation Maximization Clustering of training set with 3 clusters 
+   ## Expectation Maximization Clustering
+   # Perform Expectation Maximization Clustering on training set with 3 clusters 
    clsut <- EMCluster(trainData[,1:4],3)
    
    # Predict the labels of the cluster for new data based on cluster labels of the training set
    pre <- predict(clsut,testData[,1:4])
    
    
-   # Perform Fuzzy C-means Clustering of training set with 3 clusters 
+   ## Fuzzy C-means Clustering
+   # Perform Fuzzy C-means Clustering on training set with 3 clusters 
    clsut <- FuzzyCluster(trainData[,1:4],3)
    
-   # Predict the labels of the cluster for new data based on cluster labels of the training set
+   # Predict the labels of the new data 
    pre <- predict(clsut,testData[,1:4])
+   
+   
+   ## hierarchical clustering
+   # Perform hierarchical clustering on training set with 3 clusters 
+   clsut <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",clusters=3)
+   
+   # Predict the labels of the new data 
+   pre <- predict(clsut,testData[,1:4])
+   
+   
+   ## K-means Clustering
+   # Perform K-means Clustering on training set with 3 clusters 
+   clsut <- kmeansCluster(trainData[,1:4],3)
+   
+   # Predict the labels of the new data 
+   pre <- predict(clsut,testData[,1:4])
+   
+   
+   ## Partitioning Around Medoids (PAM) Clustering
+   # Perform pam Clustering on training set with 3 clusters 
+   clsut <- pamCluster(trainData[,1:4],3)
+   
+   # Predict the labels of the new data 
+   pre <- predict(clsut,testData[,1:4])
+   
+   
+   ## Non-negative matrix factorization (NMF)
+   # Perform nmf Clustering on training set with 3 clusters 
+   clsut <- nmfCluster(trainData[,1:4],rank=3)
+   
+   # Predict the labels of the new data 
+   pre <- predict(clsut,testData[,1:4])
+   
+   
+   ## t-Distributed Stochastic Neighbor Embedding (t-SNE)
+   
+   library(mlbench)
+   data(Sonar)
  
-
+   rndSamples <- sample(nrow(Sonar),150)
+   trainData <- Sonar[rndSamples,]
+   testData <- Sonar[-rndSamples,]
+ 
+   # Perform tSNE dimensionality reduction method on training data 
+   tsne_trainData <- tsneReductor(trainData[,1:60],dim = 3,perplexity = 10,max_iter = 1000)
    
-
-
+   # performs an embedding of new data using an existing embedding
+   tsne_testData <- predict(tsne_trainData,k=3,testData[,1:60])
    
+   
+   ## clustering stability function
+   # Compute the stability of clustering to select the best number of clusters.
+   library(mlbench)
+   data(Sonar)
+ 
+   Sonar$Class <- as.numeric(Sonar$Class)
+   Sonar$Class[Sonar$Class == 1] <- 0
+   Sonar$Class[Sonar$Class == 2] <- 1
+   
+   # Compute the stability of clustering using kmeans clustering, UMAP as dimensionality reduction method, and feature selection technique
+   
+  ClustStab <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",
+                              n_components = 3,featureselection="yes", outcome="Class",
+                              fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)
+   
+     # Compute the stability of clustering using PAM clustering, tSNE as dimensionality reduction method, and feature selection technique
+     
+   ClustStab <- clusterStability(data=Sonar, clustermethod=pamCluster, dimenreducmethod="tSNE",
+                              n_components = 3, perplexity=10,max_iter=100,k_neighbor=2,
+                             featureselection="yes", outcome="Class",fs.pvalue = 0.05,
+                               randomTests = 100,trainFraction = 0.7,k=3)
+                               
+    # Compute the stability of clustering using hierarchical clustering, PCA as dimensionality reduction method, and without applying feature selection
+                                 
+   ClustStab <- clusterStability(data=Sonar, clustermethod=hierarchicalCluster, 
+                               dimenreducmethod="PCA", n_components = 3,featureselection="no",
+                               randomTests = 100,trainFraction = 0.7,distmethod="euclidean", 
+                               clusters=3)
+ 
 
    }
 }
