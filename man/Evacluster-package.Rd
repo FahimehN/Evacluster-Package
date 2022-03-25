@@ -12,7 +12,7 @@ Contains a set of clustering methods and evaluation metrics to select the best n
         Package: \tab Evacluster\cr
         Type: \tab Package\cr
         Version: \tab 0.1.0\cr
-        Date: \tab 2022-03-24\cr
+        Date: \tab 2022-03-25\cr
         License: \tab LGPL (>= 2)\cr
     }
     Purpose: The design of clustering models and evaluation metrics for finding the cluster's number via computing clustering stability.
