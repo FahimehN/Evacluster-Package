@@ -19,7 +19,6 @@ Contains a set of clustering methods and evaluation metrics to select the best n
 The best number of clusters is selected via consensus clustering and clustering stability. 
 }
 \references{Nezhadmoghadam, Fahimeh, and Jose Tamez-Peña. "Risk profiles for negative and positive COVID-19 hospitalized patients.(2021) \emph{Computers in biology and medicine} 136 : 104753.}
-\references{Fahimeh Nezhadmoghadam, et al., Robust Discovery of Mild Cognitive impairment subtypes and their Risk of Alzheimer's Disease conversion using unsupervised machine learning and Gaussian Mixture Modeling (2021), \emph{Current Alzheimer Research}, 18 (7), 595-606.}
 \author{
 Fahimeh Nezhadmoghadam, Jose Gerardo Tamez-Pena 
 Maintainer: <f.nejad.moghadam@gmail.com>
