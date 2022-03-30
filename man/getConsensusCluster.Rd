@@ -21,7 +21,6 @@ This function gets the labels of the subjects that share the same connectivity.
 }
 \examples{
 \donttest{
-install.packages("mlbench")
 library("mlbench")
 data(Sonar)
 

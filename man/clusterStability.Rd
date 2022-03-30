@@ -74,7 +74,6 @@ the data.
 }
 \examples{
 \donttest{
-install.packages("mlbench")
 library("mlbench")
 data(Sonar)
 

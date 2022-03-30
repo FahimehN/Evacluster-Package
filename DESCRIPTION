@@ -9,7 +9,7 @@ Description: Contains a set of clustering methods and evaluation metrics to sele
 Nezhadmoghadam, Fahimeh, and Jose Tamez-Pena (2021)<doi:10.1016/j.compbiomed.2021.104753>
 Fahimeh Nezhadmoghadam, et al.(2021)<doi:10.2174/1567205018666210831145825>
 License: LGPL (>= 2)
-Encoding: latin1
+Encoding: UTF-8
 Suggests: EMCluster,inaparc,ppclust,FRESA.CAD,MASS,stats,class,NMF,cluster,Rtsne,proxy,uwot,mclust,graphics
 Packaged: 2022-03-24 20:01:22 UTC; 
 RoxygenNote: 7.1.1

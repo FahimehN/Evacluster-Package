@@ -8,7 +8,6 @@
 #' @return A list of samples' labels with same connectivity.
 #' @examples
 #' \donttest{
-#' install.packages("mlbench")
 #' library("mlbench")
 #' data(Sonar)
 #' 
