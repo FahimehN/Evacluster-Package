@@ -28,9 +28,9 @@ Sonar$Class <- as.numeric(Sonar$Class)
 Sonar$Class[Sonar$Class == 1] <- 0 
 Sonar$Class[Sonar$Class == 2] <- 1
 
-ClustStab <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",\cr
-                              n_components = 3,featureselection="yes", outcome="Class",\cr
-                              fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)\cr
+ClustStab <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",
+                              n_components = 3,featureselection="yes", outcome="Class",
+                              fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)
 
 clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
 }
