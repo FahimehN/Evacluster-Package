@@ -35,7 +35,7 @@
 #'   \item dataConcensus - A vector of consensus clustering results of training set.
 #' }
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(mlbench)
 #' data(Sonar)
 #' 

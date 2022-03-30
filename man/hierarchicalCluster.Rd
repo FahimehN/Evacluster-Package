@@ -22,7 +22,6 @@ A list of cluster labels
 This function seeks to build a hierarchy of clusters
 }
 \examples{
-\dontrun{
 library(datasets)
 data(iris)
 
@@ -31,5 +30,4 @@ trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
 cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",clusters=3)
-}
 }

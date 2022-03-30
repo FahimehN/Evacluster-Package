@@ -13,7 +13,6 @@
 #' @return tsneY: A Matrix containing the new representations for the observation
 #'          with selected dimensions by user
 #' @examples
-#' \dontrun{
 #' library(mlbench)
 #' data(Sonar)
 #' 
@@ -23,7 +22,6 @@
 #'
 #' tsne_trainData <- tsneReductor(trainData[,1:60],dim = 3,perplexity = 10,max_iter = 1000)
 #'
-#' }
 #' @export
 tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500)
 {
@@ -46,7 +44,6 @@ tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500)
 #' 
 #' @return tsneY:An embedding of new data
 #' @examples
-#' \dontrun{
 #' library(mlbench)
 #' data(Sonar)
 #' 
@@ -57,7 +54,6 @@ tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500)
 #' tsne_trainData <- tsneReductor(trainData[,1:60],dim = 3,perplexity = 10,max_iter = 1000)
 #' 
 #' tsne_testData <- predict(tsne_trainData,k=3,testData[,1:60])
-#'}
 #' @export
 
 predict.tsneReductor <- function(object,k=NULL,...)

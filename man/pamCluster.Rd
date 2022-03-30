@@ -20,7 +20,6 @@ In contrast to the k-means algorithm, this clustering methods chooses actual dat
 points as centers
 }
 \examples{
-\dontrun{
 library(datasets)
 data(iris)
 
@@ -29,5 +28,4 @@ trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
 cls <- pamCluster(trainData[,1:4],3)
-}
 }

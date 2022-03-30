@@ -27,7 +27,6 @@ constructs a low-dimensional embedding of high-dimensional
 data, distances, or similarities.
 }
 \examples{
-\dontrun{
 library(mlbench)
 data(Sonar)
 
@@ -37,5 +36,4 @@ testData <- Sonar[-rndSamples,]
 
 tsne_trainData <- tsneReductor(trainData[,1:60],dim = 3,perplexity = 10,max_iter = 1000)
 
-}
 }

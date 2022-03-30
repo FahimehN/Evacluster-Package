@@ -21,7 +21,6 @@ tsneY:An embedding of new data
 This function performs an embedding of new data using an existing embedding.
 }
 \examples{
-\dontrun{
 library(mlbench)
 data(Sonar)
 
@@ -32,5 +31,4 @@ testData <- Sonar[-rndSamples,]
 tsne_trainData <- tsneReductor(trainData[,1:60],dim = 3,perplexity = 10,max_iter = 1000)
 
 tsne_testData <- predict(tsne_trainData,k=3,testData[,1:60])
-}
 }

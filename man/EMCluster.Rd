@@ -20,7 +20,6 @@ mixture multivariate Gaussian distribution.The general purpose of clustering
 is to detect clusters of data and to assign the data to the clusters.
 }
 \examples{
-\dontrun{
 library(datasets)
 data(iris)
 
@@ -29,5 +28,4 @@ trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
 clsut <- EMCluster(trainData[,1:4],3)
-}
 }

@@ -8,7 +8,6 @@
 #' @param \dots Additional parameters passed to  hclust function
 #' @return A list of cluster labels
 #' @examples
-#' \dontrun{
 #' library(datasets)
 #' data(iris)
 #'
@@ -17,7 +16,6 @@
 #' testData <- iris[-rndSamples,]
 #'
 #' cls <- hierarchicalCluster(trainData[,1:4],distmethod="euclidean",clusters=3)
-#' }
 #' @export
 hierarchicalCluster <- function(data=NULL,distmethod=NULL,clusters=NULL,...)
 {

@@ -7,7 +7,6 @@
 #'
 #' @return A list of cluster labels, a R object of class "nmf" and the centers of the clusters
 #' @examples
-#' ' \dontrun{
 #' library(datasets)
 #' data(iris)
 #'
@@ -16,7 +15,6 @@
 #' testData <- iris[-rndSamples,]
 #'
 #' cls <- nmfCluster(trainData[,1:4],rank=3)
-#' }
 #' @export
 nmfCluster <- function(data=NULL,rank=NULL)
 {

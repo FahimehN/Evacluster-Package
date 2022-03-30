@@ -8,7 +8,6 @@
 #' @param \dots k: The number of Clusters
 #' @return A list of cluster labels and a returned object from init.EM
 #' @examples
-#' \dontrun{
 #' library(datasets)
 #' data(iris)
 #'
@@ -17,7 +16,6 @@
 #' testData <- iris[-rndSamples,]
 #'
 #' clsut <- EMCluster(trainData[,1:4],3)
-#' }
 #' @export
 EMCluster <- function(data=NULL,...)
 {

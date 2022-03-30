@@ -22,7 +22,6 @@ a new data point can be assigned a cluster (class) based on the closed
 center of mass.
 }
 \examples{
-\dontrun{
 library(datasets)
 data(iris)
 
@@ -31,5 +30,4 @@ trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
 cls <- kmeansCluster(trainData[,1:4],3)
-}
 }

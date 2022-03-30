@@ -21,7 +21,6 @@ the data point. A data object is the member of all clusters with varying
 degrees of fuzzy membership between 0 and 1.
 }
 \examples{
-\dontrun{
 library(datasets)
 data(iris)
 
@@ -30,5 +29,4 @@ trainData <- iris[rndSamples,]
 testData <- iris[-rndSamples,]
 
 cls <- FuzzyCluster(trainData[,1:4],3)
-}
 }

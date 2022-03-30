@@ -18,3 +18,13 @@ A list of cluster labels, a R object of class "nmf" and the centers of the clust
 This function factorizes samples matrix into (usually) two matrices W the cluster centroids
  and H the cluster membership,
 }
+\examples{
+library(datasets)
+data(iris)
+
+rndSamples <- sample(nrow(iris),100)
+trainData <- iris[rndSamples,]
+testData <- iris[-rndSamples,]
+
+cls <- nmfCluster(trainData[,1:4],rank=3)
+}

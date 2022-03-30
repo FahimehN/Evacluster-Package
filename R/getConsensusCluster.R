@@ -7,7 +7,7 @@
 #' @param thr This is the seq function with three arguments that are: initial value, final value, and increment (or decrement for a declining sequence). This produces ascending or descending sequences.
 #' @return A list of samples' labels with same connectivity.
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(mlbench)
 #' data(Sonar)
 #' 

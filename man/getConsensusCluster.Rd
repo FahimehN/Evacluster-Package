@@ -20,7 +20,7 @@ A list of samples' labels with same connectivity.
 This function gets the labels of the subjects that share the same connectivity.
 }
 \examples{
-\dontrun{
+\donttest{
 library(mlbench)
 data(Sonar)
 
