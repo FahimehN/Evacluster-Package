@@ -88,12 +88,12 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       tempdata <- data.frame(data[,FS])
       
       message(paste('Number of features= ',length(FS)))
-      cat("Feature selection was Done!")
+      warning("Feature selection was Done!")
     }
     else {
       data <- data[, ! names(data) %in% outcome, drop = F]
       tempdata <- data
-      cat("Without Feature Selection!!!")
+      warning("Without Feature Selection!!!")
       }
     
     ### Dimension Reduction ###
@@ -109,7 +109,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         
         tempdata[randomSamples[[i]],] <- as.data.frame(umapData$embedding)
         tempdata[-randomSamples[[i]],] <- as.data.frame(umaptestData)
-        cat("UMAP was Done!")
+        warning("UMAP was Done!")
       }
       else if (dimenreducmethod == "tSNE")
       {
@@ -128,7 +128,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
  
         tempdata[randomSamples[[i]],] <- as.data.frame(tsneData$tsneY) 
         tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
-        cat("t-SNE was Done!")
+        warning("t-SNE was Done!")
       }
       else if (dimenreducmethod == "PCA")
       {
@@ -136,9 +136,9 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         pcatestData <- stats::predict(pcaData,tempdata[-randomSamples[[i]],])
         tempdata[randomSamples[[i]],] <- as.data.frame(pcaData$x)
         tempdata[-randomSamples[[i]],] <- as.data.frame(pcatestData)
-        cat("PCA was Done!")
+        warning("PCA was Done!")
       }
-      else {cat("Package does not support the selected reduction method !!")}
+      else {warning("Package does not support the selected reduction method !!")}
     }
     
     mod1 <- clustermethod(tempdata[randomSamples[[i]],],...);
@@ -151,7 +151,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
   }
 
   numberofClusters <- numberofClusters/randomTests;
-  cat("Done Testing:")
+  warning("Done Testing:")
   randIndex <- numeric();
   jaccIndex <- numeric();
   meanJaccard <- numeric();
@@ -188,7 +188,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       }
     }
   }
-  cat("After Jacckard:")
+  warning("After Jacckard:")
   jaccardpoint[jaccardpointcount > 0] <- jaccardpoint[jaccardpointcount > 0]/jaccardpointcount[jaccardpointcount > 0];
   names(jaccardpoint) <- rownames(data);
   trainjaccardpoint[trainjaccardpointcount > 0] <- trainjaccardpoint[trainjaccardpointcount > 0]/trainjaccardpointcount[trainjaccardpointcount > 0];
@@ -220,7 +220,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     }
     totwts <- totwts + wts;
   }
-  cat("After Counting.")
+  warning("After Counting.")
   testConsesus[countMat > 0] <- testConsesus[countMat > 0]/countMat[countMat > 0];
   dataConcensus <- dataConcensus/totwts;
   pac <- sum(testConsesus[(testConsesus > pac.thr) & (testConsesus < (1.0 - pac.thr))])/nrow(data)/nrow(data);

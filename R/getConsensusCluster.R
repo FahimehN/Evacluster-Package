@@ -99,7 +99,7 @@ getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
         }
       }
       totlabeled <- sum(classID > 0);
-      cat(minLables,":",sprintf("%5.3f",lthr),": ",totlabeled,": ")
+      warning(minLables,":",sprintf("%5.3f",lthr),": ",totlabeled,": ")
     }
   }
   classID <- classID[orgnames];
