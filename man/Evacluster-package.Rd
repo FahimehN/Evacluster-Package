@@ -40,8 +40,7 @@ Maintainer: <f.nejad.moghadam@gmail.com>
    # Perform Expectation Maximization Clustering on training set with 3 clusters 
    clsut <- EMCluster(trainData[,1:4],3)
    
-   # Predict the labels of the cluster for new data based on cluster labels 
-   of the training set
+   # Predict the labels of the cluster for new data based on cluster labels of the training set
    pre <- predict(clsut,testData[,1:4])
    
    
