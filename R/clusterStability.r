@@ -43,20 +43,20 @@
 #' Sonar$Class[Sonar$Class == 1] <- 0 
 #' Sonar$Class[Sonar$Class == 2] <- 1
 #'
-#' ClustStab <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",\cr
-#'                               n_components = 3,featureselection="yes", outcome="Class",\cr
-#'                               fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)\cr
+#' ClustStab <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",
+#'                               n_components = 3,featureselection="yes", outcome="Class",
+#'                               fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)
 #'
 #'
-#' ClustStab <- clusterStability(data=Sonar, clustermethod=pamCluster, dimenreducmethod="tSNE",\cr
-#'                               n_components = 3, perplexity=10,max_iter=100,k_neighbor=2,\cr
-#'                               featureselection="yes", outcome="Class",fs.pvalue = 0.05,\cr
-#'                               randomTests = 100,trainFraction = 0.7,k=3)\cr
+#' ClustStab <- clusterStability(data=Sonar, clustermethod=pamCluster, dimenreducmethod="tSNE",
+#'                               n_components = 3, perplexity=10,max_iter=100,k_neighbor=2,
+#'                               featureselection="yes", outcome="Class",fs.pvalue = 0.05,
+#'                               randomTests = 100,trainFraction = 0.7,k=3)
 #'
 #'
-#' ClustStab <- clusterStability(data=Sonar, clustermethod=hierarchicalCluster, \cr
-#'                               dimenreducmethod="PCA", n_components = 3,featureselection="no",\cr
-#'                               randomTests = 100,trainFraction = 0.7,distmethod="euclidean",\cr
+#' ClustStab <- clusterStability(data=Sonar, clustermethod=hierarchicalCluster, 
+#'                               dimenreducmethod="PCA", n_components = 3,featureselection="no",
+#'                               randomTests = 100,trainFraction = 0.7,distmethod="euclidean",
 #'                               clusters=3)
 #'
 #'}
