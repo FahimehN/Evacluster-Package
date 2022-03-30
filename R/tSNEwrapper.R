@@ -13,6 +13,7 @@
 #' @return tsneY: A Matrix containing the new representations for the observation
 #'          with selected dimensions by user
 #' @examples
+#' install.packages("mlbench")
 #' library("mlbench")
 #' data(Sonar)
 #' 
@@ -44,6 +45,7 @@ tsneReductor <- function(data=NULL,dim=2,perplexity=30,max_iter=500)
 #' 
 #' @return tsneY:An embedding of new data
 #' @examples
+#' install.packages("mlbench")
 #' library("mlbench")
 #' data(Sonar)
 #' 

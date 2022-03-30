@@ -21,6 +21,7 @@ tsneY:An embedding of new data
 This function performs an embedding of new data using an existing embedding.
 }
 \examples{
+install.packages("mlbench")
 library("mlbench")
 data(Sonar)
 

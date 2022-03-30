@@ -27,6 +27,7 @@ constructs a low-dimensional embedding of high-dimensional
 data, distances, or similarities.
 }
 \examples{
+install.packages("mlbench")
 library("mlbench")
 data(Sonar)
 
