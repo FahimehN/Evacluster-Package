@@ -27,7 +27,7 @@ constructs a low-dimensional embedding of high-dimensional
 data, distances, or similarities.
 }
 \examples{
-library(mlbench)
+library("mlbench")
 data(Sonar)
 
 rndSamples <- sample(nrow(Sonar),150)

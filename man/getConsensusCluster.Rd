@@ -21,7 +21,7 @@ This function gets the labels of the subjects that share the same connectivity.
 }
 \examples{
 \donttest{
-library(mlbench)
+library("mlbench")
 data(Sonar)
 
 Sonar$Class <- as.numeric(Sonar$Class)

@@ -74,7 +74,7 @@ the data.
 }
 \examples{
 \donttest{
-library(mlbench)
+library("mlbench")
 data(Sonar)
 
 Sonar$Class <- as.numeric(Sonar$Class)
