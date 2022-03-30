@@ -6,7 +6,7 @@ Date: 2022-03-25
 Author: Fahimeh Nezhadmoghadam,Jose Gerardo Tamez-Pena
 Maintainer: Fahimeh Nezhadmoghadam <f.nejad.moghadam@gmail.com>
 Description: Contains a set of clustering methods and evaluation metrics to select the best number of the clusters based on clustering stability.
-Nezhadmoghadam, Fahimeh, and Jose Tamez-Peña (2021)<doi:10.1016/j.compbiomed.2021.104753>
+Nezhadmoghadam, Fahimeh, and Jose Tamez-Pena (2021)<doi:10.1016/j.compbiomed.2021.104753>
 Fahimeh Nezhadmoghadam, et al.(2021)<doi:10.2174/1567205018666210831145825>
 License: LGPL (>= 2)
 Encoding: latin1
