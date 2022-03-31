@@ -75,7 +75,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
   for (i in 1:randomTests)
   {
     randomSamples[[i]] <- sample(nrow(data),trainFraction*nrow(data));
-    message(paste('Done= ',i))
+    message(paste('iteration= ',i))
     
     ### Feature Selection ###
     if (featureselection == "yes")

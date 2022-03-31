@@ -165,6 +165,31 @@ Maintainer: <f.nejad.moghadam@gmail.com>
    hplot <- gplots::heatmap.2(as.matrix(ordermatrix),Rowv=FALSE,Colv=FALSE,
                             RowSideColors = rowcolors,ColSideColors = rowcolors,dendrogram = "none",
                             trace="none",main="Cluster Co-Association \n (k=3)")
+                            
+   
+   # Compare the PAC values of clustering stability with different numbers of clusters 
+   
+   ClustStab2 <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",
+                              n_components = 3,featureselection="yes", outcome="Class",
+                              fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=2)
+ 
+   ClustStab3 <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",
+                                n_components = 3,featureselection="yes", outcome="Class",
+                                fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=3)
+ 
+   ClustStab4 <- clusterStability(data=Sonar, clustermethod=kmeansCluster, dimenreducmethod="UMAP",
+                                n_components = 3,featureselection="yes", outcome="Class",
+                                fs.pvalue = 0.05,randomTests = 100,trainFraction = 0.7,center=4)
+                                
+                                
+   color_range<- c(black="#FDFC74", orange="#76FF7A", skyblue="#B2EC5D")
+ 
+ 
+   max.temp <- c(ClustStab2$PAC,ClustStab3$PAC,ClustStab4$PAC) 
+ 
+   barplot(max.temp,xlab = "Number of clusters",ylab = "PAC", names.arg = c( "2","3","4"), 
+          ylim=c(0,0.3),col= color_range[1:length(c(1,6,2,6,1))])
+                            
    }
 }
 \keyword{package}
