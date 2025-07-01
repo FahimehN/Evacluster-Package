@@ -144,7 +144,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     mod1 <- clustermethod(tempdata[randomSamples[[i]],],...);
     clusterLabels[[i]] <- predict(mod1,tempdata); 
     names(clusterLabels[[i]]$classification) <- rownames(tempdata) #data
-    graphics::plot(data[,1:2],col = clusterLabels[[i]]$classification,main=sprintf("%d",i));
+    graphics::plot(tempdata[,1:2],col = clusterLabels[[i]]$classification,main=sprintf("%d",i));
     numberofClusters <- numberofClusters + length(table(clusterLabels[[i]]$classification))
     testCounts[-randomSamples[[i]]] <- testCounts[-randomSamples[[i]]] + 1;
     set.seed(randomSeeds[i]);
