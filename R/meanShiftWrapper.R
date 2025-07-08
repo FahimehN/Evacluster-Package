@@ -23,17 +23,30 @@ MeanShiftCluster <- function(data,...)
   if (!requireNamespace("FRESA.CAD", quietly = TRUE)) {
     install.packages("FRESA.CAD", dependencies = TRUE)
   } 
-  
+  if (!requireNamespace("MASS", quietly = TRUE)) {
+    install.packages("MASS", dependencies = TRUE)
+  } 
 
   data <- as.matrix(data);
   parameters <- list(...)
-  cluster <- meanShiftR::meanShift(data,
-                       nNeighbors=round(0.40*nrow(data)),
-                       iterations=20,
-                       alpha=0.0,
-                       epsilon=1.0e-8,
-                       epsilonCluster=1.0e-2,
-                       bandwidth=rep(0.35,NCOL(data)));
+#  print(c(parameters,length(parameters)))
+  if (length(parameters)==0)
+  {
+#    cat("W")
+    cluster <- meanShiftR::meanShift(data,
+                         nNeighbors=round(0.40*nrow(data)),
+                         iterations=20,
+                         alpha=0.0,
+                         epsilon=1.0e-8,
+                         epsilonCluster=1.0e-2,
+                         bandwidth=rep(0.35,NCOL(data)));
+  }
+  else
+  {
+    cluster <- meanShiftR::meanShift(data,
+                                     ...);
+    
+  }
   
   numlabesl <- unique(cluster$assignment)
   meanV = list()
@@ -49,12 +62,15 @@ MeanShiftCluster <- function(data,...)
       if (nrow(dtlab) > smallestCluster)
       {
         lbt <- lbt+1;
-        meanV[[lbt]] = apply(dtlab,2,mean);
-        covM[[lbt]] = cov(dtlab);
+#        meanV[[lbt]] = apply(dtlab,2,mean);
+#        covM[[lbt]] = cov(dtlab);
+        mve_fit <- MASS::cov.rob(dtlab,method = "classical")
+        meanV[[lbt]] = mve_fit$center;
+        covM[[lbt]] = mve_fit$cov;
       }
     }
   }
-  cat(smallestCluster,":number of clsters:(",numlabesl,",",lbt,")\n");
+#  cat(smallestCluster,":number of clsters:(",numlabesl,",",lbt,")\n");
   result <- list(cluster = cluster,meanV=meanV,covM=covM)
   class(result) <- "MeanShiftCluster"
   return(result)

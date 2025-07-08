@@ -70,7 +70,7 @@ getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
             
             if ( (SconB > 0.01*npoints) || (SconA > 0.01*npoints) )
             {
-              if (SconB >= SconA)
+              if (SconB > SconA)
               {
                 classID[consensB] <- label;
                 added <- 1;

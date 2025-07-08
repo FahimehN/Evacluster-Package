@@ -17,6 +17,7 @@
 #' @param randomTests The number of iterations of the clustering process for computing the cluster stability.
 #' @param trainFraction This parameter determines the ratio of training data. The default value is 0.5.
 #' @param pac.thr  The pac.thr is the threshold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.
+#' @param plotClustering  if TRUE the class-labeled scatter plot of the first two dimensions will be shown.
 #' @param \dots Additional arguments passed to the clustering algorithm.
 #'
 #' @return A list with the following elements:
@@ -64,7 +65,7 @@
 clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NULL,
                              n_components = 3,perplexity = 25,max_iter = 1000,k_neighbor=3,
                              featureselection=NULL ,outcome=NULL,fs.pvalue = 0.05,
-                             randomTests = 20, trainFraction = 0.5,pac.thr=0.1,...)
+                             randomTests = 20, trainFraction = 0.5,pac.thr=0.1,plotClustering=FALSE,...)
 {
   clusterLabels <- list();
   randomSamples <- list();
@@ -154,7 +155,11 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     names(clusterLabels[[i]]$classification) <- rownames(tempdata) #data
     collab <- clusterLabels[[i]]$classification[randomSamples[[i]]];
     
-    graphics::plot(tempdata[randomSamples[[i]],1:2],col = collab,main=sprintf("%d",i));
+    if (plotClustering)
+    {
+      graphics::plot(tempdata[randomSamples[[i]],1:2],col = collab,main=sprintf("%d",i));
+    }
+    
     numberofClusters <- numberofClusters + length(table(clusterLabels[[i]]$classification))
     testCounts[-randomSamples[[i]]] <- testCounts[-randomSamples[[i]]] + 1;
     set.seed(randomSeeds[i]);

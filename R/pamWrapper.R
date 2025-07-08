@@ -19,7 +19,15 @@
 #' @export
 pamCluster <- function(data=NULL,...)
 {
-  pm <- cluster::pam(data,...);
+  parameters <- list(...)
+#  print(parameters)
+  k=2;
+  if (!is.null(parameters$k))
+  {
+    k=parameters$k
+  }
+  
+  pm <- cluster::pam(data,k=k);
   
   result <- list(classification = pm$clustering,pam = pm);
   class(result) <- "pamCluster"

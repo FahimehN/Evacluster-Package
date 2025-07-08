@@ -18,6 +18,7 @@ clusterStability(
   randomTests = 20,
   trainFraction = 0.5,
   pac.thr = 0.1,
+  plotClustering = FALSE,
   ...
 )
 }
@@ -47,6 +48,8 @@ clusterStability(
 \item{trainFraction}{This parameter determines the ratio of training data. The default value is 0.5.}
 
 \item{pac.thr}{The pac.thr is the threshold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.}
+
+\item{plotClustering}{if TRUE the class-labeled scatter plot of the first two dimensions will be shown.}
 
 \item{\dots}{Additional arguments passed to the clustering algorithm.}
 }
