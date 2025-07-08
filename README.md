@@ -66,7 +66,6 @@ hplot <- gplots::heatmap.2(as.matrix(ordermatrix),
                             trace="none",
                             main="Cluster Co-Association \n (Mean Shift)")
                             
-
 ```
 
 ## **Available Validity Indices**

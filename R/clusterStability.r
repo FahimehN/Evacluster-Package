@@ -77,11 +77,16 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     randomSamples[[i]] <- sample(nrow(data),trainFraction*nrow(data));
     message(paste('iteration= ',i,':',randomTests))
     
+    data <- data[, ! names(data) %in% outcome, drop = F]
+    tempdata <- data
+    
     ### Feature Selection ###
+    
     if (!is.null(featureselection))
     {
       if (featureselection == "yes")
       {
+        cat("With Feature Selection!!!...")
         message(paste('data Before FS=',nrow(data)))
         
         FS <- names(FRESA.CAD::univariate_Wilcoxon(data = data[randomSamples[[i]],],
@@ -90,15 +95,10 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         tempdata <- data.frame(data[,FS])
         
         message(paste('Number of features= ',length(FS)))
-        print("Feature selection was Done!")
+        cat("Feature selection was Done!\n")
       }
     }
-    else {
-      data <- data[, ! names(data) %in% outcome, drop = F]
-      tempdata <- data
-      print("Without Feature Selection!!!")
-    }
-    
+
     ### Dimension Reduction ###
     
     if (!is.null(dimenreducmethod))

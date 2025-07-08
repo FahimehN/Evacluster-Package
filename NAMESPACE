@@ -5,6 +5,7 @@ S3method(predict, hierarchicalCluster)
 S3method(predict, nmfCluster)
 S3method(predict, kmeansCluster)
 S3method(predict, pamCluster)
+S3method(predict, MeanShiftCluster)
 S3method(predict, tsneReductor)
 
 importFrom("stats", "predict")
