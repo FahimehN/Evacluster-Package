@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-GPL--3-blue)](https://www.gnu.org/licenses/gpl-3.0) [![R](https://img.shields.io/badge/R-%3E%3D%203.5.0-blue)](https://www.r-project.org/) [![CRAN](https://img.shields.io/cran/v/Evacluster)](https://CRAN.R-project.org/package=Evacluster)
 
-Evacluster is an R package that uses a stochastic algorithms for evaluating clustering results via consensus analysis to determining the optimal cluster numbers. It computes various validity indices and to assess clustering quality via the computation of the proportion of ambiguous clustering (PAC) score
+Evacluster is an R package that uses a stochastic algorithms for evaluating clustering results via consensus analysis to determining the optimal clustering. It computes various validity indices and to assess clustering quality via the computation of the proportion of ambiguous clustering (PAC) score
 
 ## Installation
 
