@@ -1,8 +1,8 @@
-# Evacluster: Stocastic Algorithms for Cluster Evaluation
+# Evacluster: Stochastic Algorithms for Cluster Evaluation
 
 [![License](https://img.shields.io/badge/license-GPL--3-blue)](https://www.gnu.org/licenses/gpl-3.0) [![R](https://img.shields.io/badge/R-%3E%3D%203.5.0-blue)](https://www.r-project.org/) [![CRAN](https://img.shields.io/cran/v/Evacluster)](https://CRAN.R-project.org/package=Evacluster)
 
-Evacluster is an R package that provides stocastic algorithms for evaluating clustering results via consensus clustering and determining optimal cluster numbers. It implements various validity indices and optimization techniques to assess clustering quality.
+Evacluster is an R package that uses a stochastic algorithms for evaluating clustering results via consensus analysis and determining optimal cluster numbers. It implements various validity indices and to assess clustering quality.
 
 ## Installation
 
@@ -37,19 +37,47 @@ data(iris)
 df <- iris[, -5]  # Remove species column
 
 # Evaluate clustering with default parameters
-result <- clusterStability(df,clustermethod=MeanShiftCluster)
+result <- clusterStability(df,
+                           clustermethod=MeanShiftCluster,
+                           featureselection="no",
+                           trainFraction = 0.95)
 clusterLabels <- getConsensusCluster(result)
+
+# Show the clustering stability results
+mycolors <- c("red","green","blue","yellow","orange")
+
+table(clusterLabels)
+
+ordermatrix <- result$dataConcensus
+ 
+orderindex <- 10*clusterLabels + result$jaccardpoint
+ 
+orderindex <- order(orderindex)
+ordermatrix <- ordermatrix[orderindex,orderindex]
+rowcolors <- mycolors[1+clusterLabels]
+rowcolors <- rowcolors[orderindex]
+ 
+ 
+hplot <- gplots::heatmap.2(as.matrix(ordermatrix),
+                            Rowv=FALSE,Colv=FALSE,
+                            RowSideColors = rowcolors,
+                            ColSideColors = rowcolors,
+                            dendrogram = "none",
+                            trace="none",
+                            main="Cluster Co-Association \n (Mean Shift)")
+                            
+
 ```
 
 ## **Available Validity Indices**
 
-The package supports several cluster validity indices including:
+The package provides several cluster validity indices including:
 
--   Silhouette index
+-   randIndex
 
--   Dunn index
+-   Jacckard
 
--   Jacckard.
+-   PAC
 
 ## **License**
 

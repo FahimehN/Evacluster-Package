@@ -20,11 +20,14 @@ MeanShiftCluster <- function(data,...)
   if (!requireNamespace("meanShiftR", quietly = TRUE)) {
     install.packages("meanShiftR", dependencies = TRUE)
   } 
+  if (!requireNamespace("FRESA.CAD", quietly = TRUE)) {
+    install.packages("FRESA.CAD", dependencies = TRUE)
+  } 
   
 
   data <- as.matrix(data);
   parameters <- list(...)
-  cluster <- meanShift(data,
+  cluster <- meanShiftR::meanShift(data,
                        nNeighbors=round(0.40*nrow(data)),
                        iterations=20,
                        alpha=0.0,
@@ -36,11 +39,12 @@ MeanShiftCluster <- function(data,...)
   meanV = list()
   covM = list()
   lbt <- 0;
-  smallestCluster <- max(c(ncol(mydata) + (ncol(mydata)^2)/2,0.01*nrow(mydata)));
+  smallestCluster <- max(c(ncol(data) + (ncol(data)^2)/2,0.01*nrow(data)));
   for (lb in numlabesl)
   {
-    dtlab = mydata[cluster$assignment==lb,];
-    if (length(dtlab) > 3)
+    dtlab = data[cluster$assignment==lb,];
+#    cat(length(dtlab),",",nrow(dtlab),"\n")
+    if (length(dtlab) > ncol(data))
     {
       if (nrow(dtlab) > smallestCluster)
       {
@@ -71,7 +75,7 @@ predict.MeanShiftCluster <- function(clusResult,...)
 {
   parameters <- list(...)
   data <- as.matrix(parameters[[1]]);
-  testlabesl <- nearestCentroid(data,clusResult$meanV,clusResult$covM,p.threshold = 0);
+  testlabesl <- FRESA.CAD::nearestCentroid(data,clusResult$meanV,clusResult$covM,p.threshold = 0);
   names(testlabesl) <- rownames(data);
   result <- list(classification=testlabesl)
   return(result)

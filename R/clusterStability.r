@@ -16,7 +16,7 @@
 #' @param fs.pvalue The threshold pvalue used for feature selection process. The default value is 0.05.
 #' @param randomTests The number of iterations of the clustering process for computing the cluster stability.
 #' @param trainFraction This parameter determines the ratio of training data. The default value is 0.5.
-#' @param pac.thr  The pac.thr is the thresold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.
+#' @param pac.thr  The pac.thr is the threshold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.
 #' @param \dots Additional arguments passed to the clustering algorithm.
 #'
 #' @return A list with the following elements:
@@ -78,17 +78,20 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     message(paste('iteration= ',i,':',randomTests))
     
     ### Feature Selection ###
-    if (featureselection == "yes")
+    if (!is.null(featureselection))
     {
-      message(paste('data Before FS=',nrow(data)))
-      
-      FS <- names(FRESA.CAD::univariate_Wilcoxon(data = data[randomSamples[[i]],],
-                                                 Outcome = outcome,
-                                                 pvalue = fs.pvalue))
-      tempdata <- data.frame(data[,FS])
-      
-      message(paste('Number of features= ',length(FS)))
-      print("Feature selection was Done!")
+      if (featureselection == "yes")
+      {
+        message(paste('data Before FS=',nrow(data)))
+        
+        FS <- names(FRESA.CAD::univariate_Wilcoxon(data = data[randomSamples[[i]],],
+                                                   Outcome = outcome,
+                                                   pvalue = fs.pvalue))
+        tempdata <- data.frame(data[,FS])
+        
+        message(paste('Number of features= ',length(FS)))
+        print("Feature selection was Done!")
+      }
     }
     else {
       data <- data[, ! names(data) %in% outcome, drop = F]
