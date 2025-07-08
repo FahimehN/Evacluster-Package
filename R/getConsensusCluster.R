@@ -45,9 +45,11 @@ getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
   pointJaccard <- pointJaccard[order(-pointJaccard)];
   npoints <- length(pointJaccard)
   label <- 1;
+  #  cat(thr,"Here\n")
   for (lthr in thr)
   {
     totlabeled <- sum(classID > 0);
+    #    print(totlabeled)
     if (totlabeled < npoints)
     {
       added <- 1;
@@ -64,10 +66,11 @@ getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
             consensB <- (wcon > lthr) & (classID == 0)
             SconA <- sum(pointJaccard[consensA]);
             SconB <- sum(pointJaccard[consensB]) - pointJaccard[i];
+            #            print(c(SconA,SconB))
             
-            if ( (SconB > 0.05*npoints) || (SconA > 0.05*npoints) )
+            if ( (SconB > 0.01*npoints) || (SconA > 0.01*npoints) )
             {
-              if (SconB > SconA)
+              if (SconB >= SconA)
               {
                 classID[consensB] <- label;
                 added <- 1;
@@ -99,7 +102,7 @@ getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
         }
       }
       totlabeled <- sum(classID > 0);
-      warning(minLables,":",sprintf("%5.3f",lthr),": ",totlabeled,": ")
+      cat(minLables,":",sprintf("%5.3f",lthr),": ",totlabeled,": \n")
     }
   }
   classID <- classID[orgnames];

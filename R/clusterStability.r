@@ -83,8 +83,8 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       message(paste('data Before FS=',nrow(data)))
       
       FS <- names(FRESA.CAD::univariate_Wilcoxon(data = data[randomSamples[[i]],],
-                                      Outcome = outcome,
-                                      pvalue = fs.pvalue))
+                                                 Outcome = outcome,
+                                                 pvalue = fs.pvalue))
       tempdata <- data.frame(data[,FS])
       
       message(paste('Number of features= ',length(FS)))
@@ -94,7 +94,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       data <- data[, ! names(data) %in% outcome, drop = F]
       tempdata <- data
       print("Without Feature Selection!!!")
-      }
+    }
     
     ### Dimension Reduction ###
     
@@ -103,19 +103,23 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       if(dimenreducmethod == "UMAP")
       {
         umapData <- uwot::umap(tempdata[randomSamples[[i]],], ret_model = TRUE,
-                         n_components = n_components)
-
-        umaptestData <- uwot::umap_transform(tempdata[-randomSamples[[i]],], umapData)
+                               n_components = n_components)
         
+        umaptestData <- uwot::umap_transform(data[-randomSamples[[i]],], umapData)
+        tempdata <- as.data.frame(matrix(0,nrow(data),ncol(umapData$embedding)));
+        rownames(tempdata) <- rownames(data);
+        colnames(tempdata) <- colnames(umapData$embedding);
+        #        print(c(nrow(tempdata),ncol(tempdata)))
         tempdata[randomSamples[[i]],] <- as.data.frame(umapData$embedding)
         tempdata[-randomSamples[[i]],] <- as.data.frame(umaptestData)
+        #        print(c(nrow(tempdata),ncol(tempdata)))
         print("UMAP was Done!")
       }
       else if (dimenreducmethod == "tSNE")
       {
         tsneData <- tsneReductor(tempdata[randomSamples[[i]],],
-                                        dim=n_components,perplexity=perplexity,
-                                        max_iter=max_iter)
+                                 dim=n_components,perplexity=perplexity,
+                                 max_iter=max_iter)
         
         dupIndex <- which(duplicated(tempdata[randomSamples[[i]],], fromLast = TRUE) %in% TRUE)
         
@@ -125,7 +129,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         }
         
         tsnetestData <- predict(tsneData,k=k_neighbor,tempdata[-randomSamples[[i]],])
- 
+        
         tempdata[randomSamples[[i]],] <- as.data.frame(tsneData$tsneY) 
         tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
         print("t-SNE was Done!")
@@ -140,16 +144,19 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       }
       else {warning("Package does not support the selected reduction method !!")}
     }
+    #    print(c(nrow(tempdata),ncol(tempdata)))
     
     mod1 <- clustermethod(tempdata[randomSamples[[i]],],...);
     clusterLabels[[i]] <- predict(mod1,tempdata); 
     names(clusterLabels[[i]]$classification) <- rownames(tempdata) #data
-    graphics::plot(tempdata[,1:2],col = clusterLabels[[i]]$classification,main=sprintf("%d",i));
+    collab <- clusterLabels[[i]]$classification[randomSamples[[i]]];
+    
+    graphics::plot(tempdata[randomSamples[[i]],1:2],col = collab,main=sprintf("%d",i));
     numberofClusters <- numberofClusters + length(table(clusterLabels[[i]]$classification))
     testCounts[-randomSamples[[i]]] <- testCounts[-randomSamples[[i]]] + 1;
     set.seed(randomSeeds[i]);
   }
-
+  
   numberofClusters <- numberofClusters/randomTests;
   print("Done Testing:")
   randIndex <- numeric();
@@ -193,7 +200,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
   names(jaccardpoint) <- rownames(data);
   trainjaccardpoint[trainjaccardpointcount > 0] <- trainjaccardpoint[trainjaccardpointcount > 0]/trainjaccardpointcount[trainjaccardpointcount > 0];
   names(trainjaccardpoint) <- rownames(data);
-
+  
   testConsesus <- matrix(0,nrow = nrow(data), ncol = nrow(data))
   colnames(testConsesus) <- rownames(data)
   rownames(testConsesus) <- rownames(data)
@@ -224,8 +231,8 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
   testConsesus[countMat > 0] <- testConsesus[countMat > 0]/countMat[countMat > 0];
   dataConcensus <- dataConcensus/totwts;
   pac <- sum(testConsesus[(testConsesus > pac.thr) & (testConsesus < (1.0 - pac.thr))])/nrow(data)/nrow(data);
-
-
+  
+  
   result <- list(randIndex = randIndex,jaccIndex = jaccIndex,randomSamples = randomSamples,
                  clusterLabels=clusterLabels,jaccardpoint=jaccardpoint, averageNumberofClusters=numberofClusters,
                  testConsesus=testConsesus,trainRandIndex = trainrandIndex,trainJaccIndex = trainjaccIndex,
