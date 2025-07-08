@@ -10,4 +10,4 @@ License: LGPL (>= 2)
 Encoding: UTF-8
 Suggests: mlbench,EMCluster,inaparc,ppclust,FRESA.CAD,MASS,stats,class,NMF,cluster,Rtsne,proxy,uwot,mclust,graphics,meanShiftR
 Packaged: 2025-07-8 20:01:22 UTC; 
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2

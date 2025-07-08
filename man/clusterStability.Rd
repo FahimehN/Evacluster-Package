@@ -46,9 +46,9 @@ clusterStability(
 
 \item{trainFraction}{This parameter determines the ratio of training data. The default value is 0.5.}
 
-\item{pac.thr}{The pac.thr is the thresold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.}
+\item{pac.thr}{The pac.thr is the threshold to use for computing the proportion of ambiguous clustering (PAC) score. It is as the fraction of sample pairs with consensus indices falling in the interval.The default value is 0.1.}
 
-\item{\dots}{Additional arguments passed to clusterStability().}
+\item{\dots}{Additional arguments passed to the clustering algorithm.}
 }
 \value{
 A list with the following elements:
