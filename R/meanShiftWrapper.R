@@ -1,4 +1,4 @@
-#' Mean SHift Clustering
+#' Mean Shift Clustering
 #'
 #' This function partitions (clustering) of the data into  clusters using the mean shift clustering algorithm.
 #' 
