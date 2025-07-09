@@ -14,7 +14,15 @@ getConsensusCluster(object, who = "training", thr = seq(0.8, 0.3, -0.1))
 \item{thr}{This is the seq function with three arguments that are: initial value, final value, and increment (or decrement for a declining sequence). This produces ascending or descending sequences.}
 }
 \value{
-A list of samples' labels with same connectivity.
+A list of samples' labels with same connectivity. 
+Additional attributes include:
+\describe{
+  \item{Mean_in}{The average Co-association in the cluster}
+  \item{Mean_out}{The average co-association outside the cluster}
+  \item{SD_in}{The standard deviation of the  Co-association in the cluster}
+  \item{SD_out}{The standard deviation of the  Co-association outside the cluster}
+  \item{Quality}{The quality of each cluster}
+}
 }
 \description{
 This function gets the labels of the subjects that share the same connectivity.

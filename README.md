@@ -44,12 +44,15 @@ result <- clusterStability(df,
                            featureselection="no",
                            randomTests = 100,
                            trainFraction = 0.5)
+#                           nNeighbors=round(0.35*nrow(data)),
+#                           bandwidth=rep(0.33,NCOL(df)))
 
 print(result$PAC) # Print the  proportion of ambiguous clustering (PAC)
 hist(result$jaccardpoint) # The histogram of the jaccard
 hist(result$randIndex)
 
 clusterLabels <- getConsensusCluster(result,thr = seq(0.85, 0.45, -0.1))
+barplot(attr(clusterLabels,"Quality"),ylab="Quality",xlab="Cluster",main="Cluster Quality")
 
 table(clusterLabels,iris$Species)
 
@@ -95,6 +98,11 @@ hist(result$jaccardpoint) # The histogram of the jaccard
 hist(result$randIndex)
 
 clusterLabels <- getConsensusCluster(result,who = "testing",thr = seq(0.9, 0.5, -0.1))
+barplot(attr(clusterLabels,"Quality"),ylab="Quality",xlab="Cluster",main="Cluster Quality")
+clusterLabels <- getConsensusCluster(result,who = "training",thr = seq(0.9, 0.5, -0.1))
+barplot(attr(clusterLabels,"Quality"),ylab="Quality",xlab="Cluster",main="Cluster Quality")
+
+
 table(clusterLabels)
 orderindex <- 10*clusterLabels + result$jaccardpoint
 ordermatrix <- result$testConsesus

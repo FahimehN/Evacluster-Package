@@ -5,7 +5,15 @@
 #' @param object A object of "clusterStability" function result
 #' @param who This value shows the consensus clustering result of training and testing sets. If who="training" for training set, otherwise other sets. 
 #' @param thr This is the seq function with three arguments that are: initial value, final value, and increment (or decrement for a declining sequence). This produces ascending or descending sequences.
-#' @return A list of samples' labels with same connectivity.
+#' @return A list of samples' labels with same connectivity. 
+#' Additional attributes include:
+#' \describe{
+#'   \item{Mean_in}{The average Co-association in the cluster}
+#'   \item{Mean_out}{The average co-association outside the cluster}
+#'   \item{SD_in}{The standard deviation of the  Co-association in the cluster}
+#'   \item{SD_out}{The standard deviation of the  Co-association outside the cluster}
+#'   \item{Quality}{The quality of each cluster}
+#' }
 #' @examples
 #' \donttest{
 #' library("mlbench")
@@ -106,5 +114,32 @@ getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
     }
   }
   classID <- classID[orgnames];
+  theClasses <- table(classID)
+  avgindx <- numeric(length(theClasses))
+  stdidx <- numeric(length(theClasses))
+  navgindx <- numeric(length(theClasses))
+  nstdidx <- numeric(length(theClasses))
+  ix <- 0;
+  for (cid in names(theClasses))
+  {
+    ix <- ix + 1
+    whosub <- names(classID)[classID==cid];
+    notsub <- names(classID)[classID!=cid];
+    avgindx[ix] <- mean(concensusMat[whosub,whosub]);
+    stdidx[ix] <- sd(concensusMat[whosub,whosub]);
+    navgindx[ix] <- mean(concensusMat[whosub,notsub]);
+    nstdidx[ix] <- sd(concensusMat[whosub,notsub]);
+  }
+  quality <- rep(1.0,length(theClasses))-sqrt((stdidx^2+nstdidx^2))/(avgindx-navgindx);
+  names(avgindx) <- names(theClasses)
+  names(stdidx) <- names(theClasses)
+  names(navgindx) <- names(theClasses)
+  names(nstdidx) <- names(theClasses)
+  names(quality) <- names(theClasses)
+  attr(classID,"Mean_in") <- avgindx
+  attr(classID,"SD_in") <- stdidx
+  attr(classID,"Mean_out") <- navgindx
+  attr(classID,"SD_out") <- nstdidx
+  attr(classID,"Quality") <- quality
   return (classID);
 }
