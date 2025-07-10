@@ -6,8 +6,8 @@
 \usage{
 clusterStability(
   data = NULL,
-  clustermethod = NULL,
-  dimenreducmethod = NULL,
+  clustermethod = MeanShiftCluster,
+  dimenreducmethod = c("Auto", "none", "PCA", "tsne", "UMAP"),
   n_components = 3,
   perplexity = 25,
   max_iter = 1000,
@@ -27,7 +27,7 @@ clusterStability(
 
 \item{clustermethod}{The clustering method. This can be one of "Mclust","pamCluster","kmeansCluster", "hierarchicalCluster",and "FuzzyCluster".}
 
-\item{dimenreducmethod}{The dimensionality reduction method. This must be one of "UMAP","tSNE", and "PCA".}
+\item{dimenreducmethod}{The dimensionality reduction method. This must be one of "Auto", "none","UMAP","tSNE", and "PCA".}
 
 \item{n_components}{The dimension of the space that data embed into. It can be set to any integer value in the range of 2 to 100.}
 

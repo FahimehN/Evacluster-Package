@@ -39,87 +39,16 @@ data(iris)
 df <- iris[, -5]  # Remove species column
 
 # Evaluate clustering with default parameters
-result <- clusterStability(df,
-                           clustermethod=MeanShiftCluster,
-                           featureselection="no",
-                           randomTests = 100,
-                           trainFraction = 0.5)
-#                           nNeighbors=round(0.35*nrow(data)),
-#                           bandwidth=rep(0.33,NCOL(df)))
+result <- clusterStability(df)
 
-print(result$PAC) # Print the  proportion of ambiguous clustering (PAC)
-hist(result$jaccardpoint) # The histogram of the jaccard
-hist(result$randIndex)
+print(summary(result))
+pt <- plot(result,main="Evaluation Indexes")
 
-clusterLabels <- getConsensusCluster(result,thr = seq(0.85, 0.45, -0.1))
-barplot(attr(clusterLabels,"Quality"),ylab="Quality",xlab="Cluster",main="Cluster Quality")
+clusterLabels <- getConsensusCluster(result)
+print(table(clusterLabels,iris$Species))
+print(summary(clusterLabels))
+pt <- plot(clusterLabels,main="Consensus Matrix",ylab="Sample",xlab="Sample")
 
-table(clusterLabels,iris$Species)
-
-
-# Show the clustering stability results
-mycolors <- c("red","green","blue","yellow","orange")
-
-table(clusterLabels)
-plot(iris[,1:2],col=mycolors[clusterLabels],pch=20,cex=2)
-text(iris[,1],iris[,2],iris$Species,cex=1)
-
-
-ordermatrix <- result$dataConcensus
- 
-orderindex <- 10*clusterLabels + result$jaccardpoint
- 
-orderindex <- order(orderindex)
-ordermatrix <- ordermatrix[orderindex,orderindex]
-rowcolors <- mycolors[clusterLabels]
-rowcolors <- rowcolors[orderindex]
- 
- 
-hplot <- gplots::heatmap.2(as.matrix(ordermatrix),
-                            Rowv=FALSE,Colv=FALSE,
-                            RowSideColors = rowcolors,
-                            ColSideColors = rowcolors,
-                            dendrogram = "none",
-                            trace="none",
-                            main="Cluster Co-Association \n (Mean Shift)")
-
-
-## Random numbers should not create a clear co-association matrix
-
-df <- as.data.frame(matrix(rnorm(200 * 3), nrow = 200, ncol = 3))
-result <- clusterStability(df,
-                           clustermethod=kmeansCluster,
-                           featureselection="no",
-                           randomTests = 100,
-                           trainFraction = 0.5,
-                           center=2)
-print(result$PAC) # Print the  proportion of ambiguous clustering (PAC)
-hist(result$jaccardpoint) # The histogram of the jaccard
-hist(result$randIndex)
-
-clusterLabels <- getConsensusCluster(result,who = "testing",thr = seq(0.9, 0.5, -0.1))
-barplot(attr(clusterLabels,"Quality"),ylab="Quality",xlab="Cluster",main="Cluster Quality")
-clusterLabels <- getConsensusCluster(result,who = "training",thr = seq(0.9, 0.5, -0.1))
-barplot(attr(clusterLabels,"Quality"),ylab="Quality",xlab="Cluster",main="Cluster Quality")
-
-
-table(clusterLabels)
-orderindex <- 10*clusterLabels + result$jaccardpoint
-ordermatrix <- result$testConsesus
- 
-orderindex <- order(orderindex)
-ordermatrix <- ordermatrix[orderindex,orderindex]
-rowcolors <- mycolors[clusterLabels]
-rowcolors <- rowcolors[orderindex]
- 
- 
-hplot <- gplots::heatmap.2(as.matrix(ordermatrix),
-                            Rowv=FALSE,Colv=FALSE,
-                            RowSideColors = rowcolors,
-                            ColSideColors = rowcolors,
-                            dendrogram = "none",
-                            trace="none",
-                            main="Cluster Co-Association \n (kmeans)")
                             
 ```
 

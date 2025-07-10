@@ -6,7 +6,7 @@
 #'
 #' @param data A Data set
 #' @param clustermethod The clustering method. This can be one of "Mclust","pamCluster","kmeansCluster", "hierarchicalCluster",and "FuzzyCluster".
-#' @param dimenreducmethod The dimensionality reduction method. This must be one of "UMAP","tSNE", and "PCA".
+#' @param dimenreducmethod The dimensionality reduction method. This must be one of "Auto", "none","UMAP","tSNE", and "PCA".
 #' @param n_components The dimension of the space that data embed into. It can be set to any integer value in the range of 2 to 100.
 #' @param perplexity The Perplexity parameter that determines the optimal number of neighbors in tSNE method.(it is only used in the tSNE reduction method)
 #' @param max_iter The maximum number of iterations for performing tSNE reduction method.
@@ -62,16 +62,42 @@
 #'
 #'}
 #' @export
-clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NULL,
-                             n_components = 3,perplexity = 25,max_iter = 1000,k_neighbor=3,
-                             featureselection=NULL ,outcome=NULL,fs.pvalue = 0.05,
-                             randomTests = 20, trainFraction = 0.5,pac.thr=0.1,plotClustering=FALSE,...)
+clusterStability <- function(data=NULL, 
+                             clustermethod=MeanShiftCluster, 
+                             dimenreducmethod=c("Auto","none","PCA","tsne","UMAP"),
+                             n_components = 3,
+                             perplexity = 25,
+                             max_iter = 1000,
+                             k_neighbor=3,
+                             featureselection=NULL,
+                             outcome=NULL,
+                             fs.pvalue = 0.05,
+                             randomTests = 20,
+                             trainFraction = 0.5,
+                             pac.thr=0.1,
+                             plotClustering=FALSE,
+                             ...)
 {
   clusterLabels <- list();
   randomSamples <- list();
   numberofClusters <- 0;
   testCounts <- numeric(nrow(data))
   randomSeeds <- sample(randomTests);
+
+  dimenreducmethod <- match.arg(dimenreducmethod);
+  if (dimenreducmethod=="Auto")
+  {
+    if (ncol(data)>5)
+    {
+      dimenreducmethod <- "UMAP"
+    }
+    else
+    {
+      message("No dimension reduction: Using all features\n")
+      dimenreducmethod <- NULL
+    }
+  }
+  
   
   for (i in 1:randomTests)
   {
@@ -96,7 +122,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         tempdata <- data.frame(data[,FS])
         
         message(paste('Number of features= ',length(FS)))
-        cat("Feature selection was Done!\n")
+        message("Feature selection was Done!\n")
       }
     }
 
@@ -117,7 +143,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         tempdata[randomSamples[[i]],] <- as.data.frame(umapData$embedding)
         tempdata[-randomSamples[[i]],] <- as.data.frame(umaptestData)
         #        print(c(nrow(tempdata),ncol(tempdata)))
-        print("UMAP was Done!")
+        message("UMAP was Done!")
       }
       else if (dimenreducmethod == "tSNE")
       {
@@ -136,7 +162,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         
         tempdata[randomSamples[[i]],] <- as.data.frame(tsneData$tsneY) 
         tempdata[-randomSamples[[i]],] <- as.data.frame(tsnetestData$tsneY)
-        print("t-SNE was Done!")
+        message("t-SNE was Done!")
       }
       else if (dimenreducmethod == "PCA")
       {
@@ -144,9 +170,8 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
         pcatestData <- stats::predict(pcaData,tempdata[-randomSamples[[i]],])
         tempdata[randomSamples[[i]],] <- as.data.frame(pcaData$x)
         tempdata[-randomSamples[[i]],] <- as.data.frame(pcatestData)
-        print("PCA was Done!")
+        message("PCA was Done!")
       }
-      else {warning("Package does not support the selected reduction method !!")}
     }
     #    print(c(nrow(tempdata),ncol(tempdata)))
     
@@ -166,7 +191,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
   }
   
   numberofClusters <- numberofClusters/randomTests;
-  print("Done Testing:")
+  message("Done Testing:")
   randIndex <- numeric();
   jaccIndex <- numeric();
   meanJaccard <- numeric();
@@ -203,7 +228,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
       }
     }
   }
-  print("After Jacckard:")
+  message("After Jacckard:")
   jaccardpoint[jaccardpointcount > 0] <- jaccardpoint[jaccardpointcount > 0]/jaccardpointcount[jaccardpointcount > 0];
   names(jaccardpoint) <- rownames(data);
   trainjaccardpoint[trainjaccardpointcount > 0] <- trainjaccardpoint[trainjaccardpointcount > 0]/trainjaccardpointcount[trainjaccardpointcount > 0];
@@ -220,7 +245,7 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     testset <- rownames(data[-randomSamples[[i]],])
     aclassLabels <- clusterLabels[[i]]$classification;
     nclus <- length(table(aclassLabels))
-    wts <- (1.0-0.99*(nclus < 2))/(1.0+abs(nclus-numberofClusters));
+    wts <- (1.0-0.999*(nclus < 2))/(1.0+abs(nclus-numberofClusters));
     classLabels <- aclassLabels[testset];
     btestset <- rownames(data) %in% testset;
     for (id in testset)
@@ -235,10 +260,15 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
     }
     totwts <- totwts + wts;
   }
-  print("After Counting.")
+  message("After Counting.")
   testConsesus[countMat > 0] <- testConsesus[countMat > 0]/countMat[countMat > 0];
   dataConcensus <- dataConcensus/totwts;
-  pac <- sum(testConsesus[(testConsesus > pac.thr) & (testConsesus < (1.0 - pac.thr))])/nrow(data)/nrow(data);
+  totmatpts <- nrow(data)^2;
+  pac <- sum(testConsesus[(testConsesus > pac.thr) & (testConsesus < (1.0 - pac.thr))])/totmatpts;
+  pac <- c(pac,sum(testConsesus[(testConsesus > 0.9*pac.thr) & (testConsesus < (1.0 - 0.9*pac.thr))])/totmatpts);
+  pac <- c(pac,sum(testConsesus[(testConsesus > 1.1*pac.thr) & (testConsesus < (1.0 - 1.1*pac.thr))])/totmatpts);
+  pac <- c(pac,sum(testConsesus[(testConsesus > 0.8*pac.thr) & (testConsesus < (1.0 - 0.8*pac.thr))])/totmatpts);
+  pac <- c(pac,sum(testConsesus[(testConsesus > 1.2*pac.thr) & (testConsesus < (1.0 - 1.2*pac.thr))])/totmatpts);
   
   
   result <- list(randIndex = randIndex,jaccIndex = jaccIndex,randomSamples = randomSamples,
@@ -247,6 +277,86 @@ clusterStability <- function(data=NULL, clustermethod=NULL, dimenreducmethod=NUL
                  trainJaccardpoint=trainjaccardpoint,PAC=pac,dataConcensus=dataConcensus);
   class(result) <- "ClusterStability"
   return(result);
+}
+
+#' ClusterStability summary function
+#'
+#' This function prints the main features of the cluster evaluation.
+#'
+#' @param object A returned object of ClusterStability function
+#' @return the table summarizing the mean and standard deviations of the clustering
+#'
+#' @export
+summary.ClusterStability <- function(clusResult)
+{
+  dc <- clusResult$clusterLabels
+  attributes(dc) <- NULL
+  numclusters <- unlist(lapply(lapply(dc,table),length))
+  AverageClusters <- mean(numclusters)
+  stdClusters <- sd(numclusters)
+  meanRandTrain <- mean(clusResult$trainRandIndex)
+  sdRandTrain <- sd(clusResult$trainRandIndex)
+  meanRandTest <- mean(clusResult$randIndex)
+  sdRandTest <- sd(clusResult$randIndex)
+  meanJaccard <- mean(clusResult$jaccIndex)
+  sdJaccard <- sd(clusResult$jaccIndex)
+  meanJaccardTrain <- mean(clusResult$trainJaccIndex)
+  sdJaccardTrain <- sd(clusResult$trainJaccIndex)
+  meanAtPointJaccard <- mean(clusResult$jaccardpoint)
+  sdAtPointJaccard <- sd(clusResult$jaccardpoint)
+  meanAtPointJaccardTrain <- mean(clusResult$trainJaccardpoint)
+  sdAtPointJaccardTrain <- sd(clusResult$trainJaccardpoint)
+  meanPAC <- mean(clusResult$PAC)
+  sdPAC <- sd(clusResult$PAC)
+  
+  result <- c(AverageClusters,stdClusters)
+  result <- rbind(result,c(meanRandTrain,sdRandTrain))
+  result <- rbind(result,c(meanRandTest,sdRandTest))
+  result <- rbind(result,c(meanJaccardTrain,sdJaccardTrain))
+  result <- rbind(result,c(meanJaccard,sdJaccard))
+  result <- rbind(result,c(meanAtPointJaccardTrain,sdAtPointJaccardTrain))
+  result <- rbind(result,c(meanAtPointJaccard,sdAtPointJaccard))
+  result <- rbind(result,c(meanPAC,sdPAC))
+  result <- as.data.frame(result)
+#  print(result)
+  colnames(result) <- c("Mean","SD")
+  rownames(result) <- c("No. Clusters",
+                        "Train Rand",
+                        "Test Rand",
+                        "Train Jaccard",
+                        "Test Jaccard",
+                        "Train At Point",
+                        "Test At Point",
+                        "PAC")
+  
+  return(result)
+}
+
+
+#' ClusterStability plot function
+#'
+#' This function box plots the indexes of the cluster evaluation.
+#'
+#' @param object A returned object of ClusterStability function
+#' @param \dots Additional arguments passed to the boxplot function.
+#' @return the box plots data
+#'
+#' @export
+plot.ClusterStability <- function(clusResult,...)
+{
+  op <- par(no.readonly=TRUE)
+  
+  databoxes <- list(Train_Rand=clusResult$trainRandIndex,
+                    Rand=clusResult$randIndex,
+                    Train_Jaccard=clusResult$trainJaccIndex,
+                    Jaccard=clusResult$jaccIndex,
+                    Train_At_Point=clusResult$trainJaccardpoint,
+                    At_Point=clusResult$jaccardpoint
+                    ) 
+  par(cex=0.95,mar=c(8,4,4,2)+0.1)
+  bp <- boxplot(databoxes,notch=TRUE,las=2,ylab="Score",...)
+  par(op)
+  return(bp)
 }
 
 
