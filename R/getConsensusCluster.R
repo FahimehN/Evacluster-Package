@@ -204,7 +204,7 @@ plot.ConsesusLables <- function(LablesResult,...)
   
   orderindex <- order(orderindex)
   ordermatrix <- ordermatrix[orderindex,orderindex]
-  rowcolors <- mycolors[clusterLabels]
+  rowcolors <- mycolors[LablesResult]
   rowcolors <- rowcolors[orderindex]
   
   #                             lhei = c(1.5,0.2,4.0),
