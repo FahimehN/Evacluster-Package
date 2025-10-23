@@ -192,7 +192,7 @@ plot.ConsesusLables <- function(LablesResult,...)
   
   quality <- attr(LablesResult,"Quality")
   ordermatrix <- attr(LablesResult,"concensusMat")
-  theJaccard <- attr(LablesResult,"pointJaccard")
+  theJaccard <- 0.3*attr(LablesResult,"pointJaccard") + 0.7*apply(ordermatrix,2,mean)
   if (length(LablesResult)>1000)
   {
     LablesResult <- LablesResult[sample(length(LablesResult),1000)]
@@ -200,11 +200,11 @@ plot.ConsesusLables <- function(LablesResult,...)
   ordermatrix <- ordermatrix[names(LablesResult),names(LablesResult)]
   theJaccard <- theJaccard[names(LablesResult)]
   
-  orderindex <- 10*LablesResult - theJaccard
+  orderindex <- 10*(LablesResult+1) + (1-theJaccard)
   
   orderindex <- order(orderindex)
   ordermatrix <- ordermatrix[orderindex,orderindex]
-  rowcolors <- mycolors[LablesResult]
+  rowcolors <- mycolors[(LablesResult %% length(mycolors)) + 1]
   rowcolors <- rowcolors[orderindex]
   
   #                             lhei = c(1.5,0.2,4.0),
