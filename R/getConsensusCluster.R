@@ -30,7 +30,7 @@
 #' clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
 #' }
 #' @export
-getConsensusCluster <- function(object,who="training",thr=seq(0.80,0.30,-0.1))
+getConsensusCluster <- function(object,who="training",thr=seq(0.85,0.05,-0.1))
 {
   
   orgnames <-  rownames(object$dataConcensus);
@@ -192,7 +192,7 @@ plot.ConsesusLables <- function(LablesResult,...)
   
   quality <- attr(LablesResult,"Quality")
   ordermatrix <- attr(LablesResult,"concensusMat")
-  theJaccard <- 0.3*attr(LablesResult,"pointJaccard") + 0.7*apply(ordermatrix,2,mean)
+  theJaccard <- 0.7*attr(LablesResult,"pointJaccard") + 0.3*apply(ordermatrix,2,mean)
   if (length(LablesResult)>1000)
   {
     LablesResult <- LablesResult[sample(length(LablesResult),1000)]
