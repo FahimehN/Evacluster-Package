@@ -38,17 +38,19 @@ mergeConsensusClusters <- function(object,Zthr=2.0)
   orgnames <-  rownames(concensusMat);
 
   classID <- object[orgnames];
+#  cat(c(length(orgnames),length(classID)),"\n")
   theClasses <- table(classID)
-  oclases <- names(theClasses)
-  sclases <- oclases; 
-  for (cid in names(theClasses))
+  oclases <- rev(names(theClasses))
+  sclases <- oclases;
+  mclasses <- oclases
+  for (cid in mclasses)
   {
     if (sum(cid %in% sclases) > 0)
     {
       oclases <- oclases[!(oclases %in% cid)];
       for (oid in oclases)
       {
-        if (sum(oid %in% sclases) > 0)
+        if ((sum(cid %in% sclases) > 0) && (sum(oid %in% sclases) > 0))
         {
           whosub <- names(classID)[classID==cid];
           otrsub <- names(classID)[classID==oid];
@@ -58,12 +60,15 @@ mergeConsensusClusters <- function(object,Zthr=2.0)
           stdotr <- sd(concensusMat[otrsub,otrsub]);
           meanInter <- mean(concensusMat[whosub,otrsub]);
           sdInter <- sd(concensusMat[whosub,otrsub]);
-          distance <- (meanotr - meanInter)/sqrt((stdotr^2+sdInter^2)/2);
-#          cat(c(cid,oid,distance),"\n")
+          distance <- abs(meanwho - meanInter)/sqrt(1.0e-6+(stdotr^2+sdInter^2)/2);
+#          cat(c(cid,oid,length(whosub),length(otrsub),meanwho,meanInter,meanotr,distance),"\n")
           if (distance < Zthr)
           {
-            classID[classID==oid] <- cid;
-            sclases <- sclases[!(sclases %in% oid)];
+            cat(c("Merged:",cid,"to",oid),"\n");
+            classID[classID==cid] <- oid;
+            sclases <- sclases[!(sclases %in% cid)];
+#            print(sclases);
+            oclases <- sclases;
           }
         }
       }

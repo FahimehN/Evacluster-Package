@@ -192,15 +192,15 @@ plot.ConsesusLables <- function(LablesResult,...)
   
   quality <- attr(LablesResult,"Quality")
   ordermatrix <- attr(LablesResult,"concensusMat")
-  theJaccard <- 0.7*attr(LablesResult,"pointJaccard") + 0.3*apply(ordermatrix,2,mean)
+  theScore <- 0.7*attr(LablesResult,"pointJaccard") + 0.3*apply(ordermatrix,2,mean)
   if (length(LablesResult)>1000)
   {
     LablesResult <- LablesResult[sample(length(LablesResult),1000)]
   }
   ordermatrix <- ordermatrix[names(LablesResult),names(LablesResult)]
-  theJaccard <- theJaccard[names(LablesResult)]
+  theScore <- theScore[names(LablesResult)]
   
-  orderindex <- 10*(LablesResult+1) + (1-theJaccard)
+  orderindex <- 10*(LablesResult+1) + (1-theScore)
   
   orderindex <- order(orderindex)
   ordermatrix <- ordermatrix[orderindex,orderindex]
