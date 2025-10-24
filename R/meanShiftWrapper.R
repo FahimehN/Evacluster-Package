@@ -36,9 +36,9 @@ MeanShiftCluster <- function(data,...)
     cluster <- meanShiftR::meanShift(data,
                          nNeighbors=round(0.40*nrow(data)),
                          iterations=20,
-                         alpha=0.0,
+                         alpha=0.5,
                          epsilon=1.0e-8,
-                         epsilonCluster=1.0e-2,
+                         epsilonCluster=1.0e-3,
                          bandwidth=rep(0.35,NCOL(data)));
   }
   else
@@ -65,6 +65,7 @@ MeanShiftCluster <- function(data,...)
 #        meanV[[lbt]] = apply(dtlab,2,mean);
 #        covM[[lbt]] = cov(dtlab);
         mve_fit <- MASS::cov.rob(dtlab,method = "classical")
+#        mve_fit <- MASS::cov.rob(dtlab,method = "mve")
         meanV[[lbt]] = mve_fit$center;
         covM[[lbt]] = mve_fit$cov;
       }

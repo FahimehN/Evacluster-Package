@@ -238,3 +238,96 @@ plot.ConsesusLables <- function(LablesResult,...)
   return(result)
 }
   
+
+#' NC_UMAP_Reclassifier reclassification function
+#'
+#' This function will reclassify the labels based on Nearest Centroid(NC) and UMAP Dimension reduction method
+#'
+#' @param classID A returned object of ConsesusLables function
+#' @param data The data used to extract the clusters
+#' @param n_components the number of components of the UMAP transform
+#' @return the label of each sample in the data as ConsensusLabel Object
+#'
+#' @export
+NC_UMAP_Reclassifier <- function(classID,data,n_components=3)
+{
+  concensusMat <- attr(classID,"concensusMat");
+  pointJaccard <- attr(classID,"pointJaccard");
+  orgnames <-  rownames(concensusMat);
+  classID <- classID[orgnames];
+  umapData <- NULL
+  if (ncol(data)>n_components)
+  {
+    umapData <- uwot::umap(data,ret_model = TRUE,n_components = n_components)
+  #  print(head(umapData$embedding))
+    UData <- as.matrix(umapData$embedding)
+    rownames(UData) <- rownames(data);
+    colnames(UData) <- paste("V",1:ncol(UData),sep="_");
+  }
+  else
+  {
+    UData <- as.matrix(data)
+  }
+
+  numlabesl <- unique(classID);
+  lbt <- 0;
+  meanV = list()
+  covM = list()
+  smallestCluster <- max(c(ncol(UData) + (ncol(UData)^2)/2,0.01*nrow(UData)));
+  
+  for (lb in numlabesl)
+  {
+    dtlab = UData[classID==lb,];
+    if (length(dtlab) > ncol(UData))
+    {
+      if (nrow(dtlab) > smallestCluster)
+      {
+        lbt <- lbt+1;
+#        mve_fit <- MASS::cov.rob(dtlab,method = "mve")
+        mve_fit <- MASS::cov.rob(dtlab,method = "classical")
+        meanV[[lbt]] = mve_fit$center;
+        covM[[lbt]] = mve_fit$cov;
+      }
+    }
+  }
+  
+  nclassID <- FRESA.CAD::nearestCentroid(UData,meanV,covM,p.threshold = 0);
+  names(nclassID) <- rownames(data);
+  
+  print(table(classID,nclassID))
+  
+  theClasses <- table(nclassID)
+  classID <- as.numeric(nclassID)
+  names(classID) <- orgnames
+  avgindx <- numeric(length(theClasses))
+  stdidx <- numeric(length(theClasses))
+  navgindx <- numeric(length(theClasses))
+  nstdidx <- numeric(length(theClasses))
+  ix <- 0;
+  for (cid in names(theClasses))
+  {
+    ix <- ix + 1
+    whosub <- names(classID)[classID==cid];
+    notsub <- names(classID)[classID!=cid];
+    avgindx[ix] <- mean(concensusMat[whosub,whosub]);
+    stdidx[ix] <- sd(concensusMat[whosub,whosub]);
+    navgindx[ix] <- mean(concensusMat[whosub,notsub]);
+    nstdidx[ix] <- sd(concensusMat[whosub,notsub]);
+  }
+  quality <- rep(1.0,length(theClasses))-sqrt((stdidx^2+nstdidx^2))/(avgindx-navgindx);
+  names(avgindx) <- names(theClasses)
+  names(stdidx) <- names(theClasses)
+  names(navgindx) <- names(theClasses)
+  names(nstdidx) <- names(theClasses)
+  names(quality) <- names(theClasses)
+  attr(classID,"Mean_in") <- avgindx
+  attr(classID,"SD_in") <- stdidx
+  attr(classID,"Mean_out") <- navgindx
+  attr(classID,"SD_out") <- nstdidx
+  attr(classID,"Quality") <- quality
+  attr(classID,"concensusMat") <- concensusMat
+  attr(classID,"pointJaccard") <- pointJaccard
+  attr(classID,"UMAP") <- umapData
+  class(classID) <- "ConsesusLables"
+  return (classID)
+}
