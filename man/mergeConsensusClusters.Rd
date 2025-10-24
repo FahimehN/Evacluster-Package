@@ -4,7 +4,7 @@
 \alias{mergeConsensusClusters}
 \title{mergeConsensusClusters}
 \usage{
-mergeConsensusClusters(object, Zthr = 2)
+mergeConsensusClusters(object, Zthr = 0.25)
 }
 \arguments{
 \item{object}{A object of "getConsensusCluster" function result}

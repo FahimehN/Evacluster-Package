@@ -4,7 +4,7 @@
 \alias{getConsensusCluster}
 \title{Consensus Clustering Results}
 \usage{
-getConsensusCluster(object, who = "training", thr = seq(0.85, 0.05, -0.1))
+getConsensusCluster(object, who = "training", thr = seq(0.9, 0.05, -0.05))
 }
 \arguments{
 \item{object}{A object of "clusterStability" function result}
@@ -22,6 +22,8 @@ Additional attributes include:
   \item{SD_in}{The standard deviation of the  Co-association in the cluster}
   \item{SD_out}{The standard deviation of the  Co-association outside the cluster}
   \item{Quality}{The quality of each cluster}
+  \item{concensusMat}{concensusMat}
+    \item{pointJaccard}{pointJaccard}
 }
 }
 \description{

@@ -13,6 +13,8 @@
 #'   \item{SD_in}{The standard deviation of the  Co-association in the cluster}
 #'   \item{SD_out}{The standard deviation of the  Co-association outside the cluster}
 #'   \item{Quality}{The quality of each cluster}
+#'   \item{concensusMat}{concensusMat}
+#'     \item{pointJaccard}{pointJaccard}
 #' }
 #' @examples
 #' \donttest{
@@ -30,7 +32,7 @@
 #' clusterLabels <- getConsensusCluster(ClustStab,who="training",thr=seq(0.80,0.30,-0.1))
 #' }
 #' @export
-getConsensusCluster <- function(object,who="training",thr=seq(0.85,0.05,-0.1))
+getConsensusCluster <- function(object,who="training",thr=seq(0.90,0.05,-0.05))
 {
   
   orgnames <-  rownames(object$dataConcensus);

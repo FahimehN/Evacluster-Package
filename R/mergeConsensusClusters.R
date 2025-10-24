@@ -30,7 +30,7 @@
 #' NewclusterLabels <- getConsensusCluster(clusterLabels)
 #' }
 #' @export
-mergeConsensusClusters <- function(object,Zthr=2.0)
+mergeConsensusClusters <- function(object,Zthr=0.25)
 {
   
   concensusMat <- attr(object,"concensusMat");
@@ -60,8 +60,10 @@ mergeConsensusClusters <- function(object,Zthr=2.0)
           stdotr <- sd(concensusMat[otrsub,otrsub]);
           meanInter <- mean(concensusMat[whosub,otrsub]);
           sdInter <- sd(concensusMat[whosub,otrsub]);
-          distance <- abs(meanwho - meanInter)/sqrt(1.0e-6+(stdotr^2+sdInter^2)/2);
-#          cat(c(cid,oid,length(whosub),length(otrsub),meanwho,meanInter,meanotr,distance),"\n")
+          distance1 <- abs(meanwho - meanInter)/sqrt(1.0e-6+(meanwho^2+sdInter^2)/2);
+          distance2 <- abs(meanotr - meanInter)/sqrt(1.0e-6+(stdotr^2+sdInter^2)/2);
+          distance <- min(distance1,distance2);
+#          cat(c(cid,oid,length(whosub),length(otrsub),meanwho,meanInter,meanotr,distance1,distance2,distance),"\n")
           if (distance < Zthr)
           {
             cat(c("Merged:",cid,"to",oid),"\n");
