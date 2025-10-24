@@ -186,9 +186,9 @@ plot.ConsesusLables <- function(LablesResult,...)
   op <- par(no.readonly=TRUE)
   
   mycolors <- c("red","green","blue","yellow","orange",
+                "cyan","black","brown","purple","pink",
                 "red","green","blue","yellow","orange",
-                "red","green","blue","yellow","orange",
-                "red","green","blue","yellow","orange",
+                "cyan","black","brown","purple","pink",
                 "red","green","blue","yellow","orange")
   
   
@@ -283,8 +283,11 @@ NC_UMAP_Reclassifier <- function(classID,data,n_components=3)
       if (nrow(dtlab) > smallestCluster)
       {
         lbt <- lbt+1;
-#        mve_fit <- MASS::cov.rob(dtlab,method = "mve")
-        mve_fit <- MASS::cov.rob(dtlab,method = "classical")
+#        mve_fit <- try(MASS::cov.rob(dtlab,method = "mve"))
+#        if (inherits(mve_fit, "try-error"))
+#        {
+            mve_fit <- MASS::cov.rob(dtlab,method = "classical")
+#        }
         meanV[[lbt]] = mve_fit$center;
         covM[[lbt]] = mve_fit$cov;
       }

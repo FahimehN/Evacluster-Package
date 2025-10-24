@@ -26,7 +26,10 @@ MeanShiftCluster <- function(data,...)
   if (!requireNamespace("MASS", quietly = TRUE)) {
     install.packages("MASS", dependencies = TRUE)
   } 
-
+  if (!requireNamespace("e1071", quietly = TRUE)) {
+    install.packages("e1071", dependencies = TRUE)
+  }
+  
   data <- as.matrix(data);
   parameters <- list(...)
 #  print(c(parameters,length(parameters)))
@@ -39,7 +42,7 @@ MeanShiftCluster <- function(data,...)
                          alpha=0.5,
                          epsilon=1.0e-8,
                          epsilonCluster=1.0e-3,
-                         bandwidth=rep(0.35,NCOL(data)));
+                         bandwidth=rep(0.5,NCOL(data)));
   }
   else
   {
@@ -62,17 +65,29 @@ MeanShiftCluster <- function(data,...)
       if (nrow(dtlab) > smallestCluster)
       {
         lbt <- lbt+1;
-#        meanV[[lbt]] = apply(dtlab,2,mean);
-#        covM[[lbt]] = cov(dtlab);
-        mve_fit <- MASS::cov.rob(dtlab,method = "classical")
-#        mve_fit <- MASS::cov.rob(dtlab,method = "mve")
+#        mve_fit <- try(MASS::cov.rob(dtlab,method = "mve"))
+#        if (inherits(mve_fit, "try-error"))
+#        {
+          mve_fit <- MASS::cov.rob(dtlab,method = "classical")
+#        }
         meanV[[lbt]] = mve_fit$center;
         covM[[lbt]] = mve_fit$cov;
       }
     }
   }
+  datafit <- as.data.frame(data);
+  noise_matrix <- matrix(rnorm(prod(dim(datafit)), mean = 0, sd = 0.005*(max(datafit)-min(datafit))),
+                         nrow = nrow(datafit),
+                         ncol = ncol(datafit))
+  datafit <- datafit+noise_matrix;
+  
+  datafit$cluster <- as.factor(cluster$assignment);
+  fitmethod <- e1071::svm(cluster~.,datafit);
 #  cat(smallestCluster,":number of clsters:(",numlabesl,",",lbt,")\n");
-  result <- list(cluster = cluster,meanV=meanV,covM=covM)
+  result <- list(cluster = cluster,
+                 meanV=meanV,
+                 covM=covM,
+                 fit=fitmethod)
   class(result) <- "MeanShiftCluster"
   return(result)
 }
@@ -92,7 +107,15 @@ predict.MeanShiftCluster <- function(clusResult,...)
 {
   parameters <- list(...)
   data <- as.matrix(parameters[[1]]);
-  testlabesl <- FRESA.CAD::nearestCentroid(data,clusResult$meanV,clusResult$covM,p.threshold = 0);
+  testlabes_NC <- FRESA.CAD::nearestCentroid(data,clusResult$meanV,clusResult$covM,p.threshold = 0);
+  distances <- attr(testlabes_NC,"distance");
+  tdts <- quantile(distances,probs=c(0.95));
+  testlabes_NC <- as.numeric(testlabes_NC)
+  testdata <- as.data.frame(data)
+  testdata$cluster <- numeric(nrow(testdata))
+  testlabes_svm <- as.numeric(predict(clusResult$fit,testdata));
+  testlabesl <- as.numeric(testlabes_NC)
+  testlabesl[distances>tdts] <- testlabes_svm[distances>tdts];
   names(testlabesl) <- rownames(data);
   result <- list(classification=testlabesl)
   return(result)
