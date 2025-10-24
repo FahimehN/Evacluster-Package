@@ -256,7 +256,7 @@ NC_UMAP_Reclassifier <- function(classID,data,n_components=3)
   orgnames <-  rownames(concensusMat);
   classID <- classID[orgnames];
   umapData <- NULL
-  if (ncol(data)>n_components)
+  if (ncol(data)>5)
   {
     umapData <- uwot::umap(data,ret_model = TRUE,n_components = n_components)
   #  print(head(umapData$embedding))
