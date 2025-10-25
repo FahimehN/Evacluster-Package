@@ -187,9 +187,9 @@ plot.ConsesusLables <- function(LablesResult,...)
   
   mycolors <- c("red","green","blue","yellow","orange",
                 "cyan","black","brown","purple","pink",
-                "red","green","blue","yellow","orange",
-                "cyan","black","brown","purple","pink",
-                "red","green","blue","yellow","orange")
+                "magenta","lightblue","darkblue","lightgreen","darkgreen",
+                "darkred","gray","coral","azure",
+                "azure4","chartreuse","cyan3","darkorchid","aquamarine")
   
   
   quality <- attr(LablesResult,"Quality")
