@@ -39,7 +39,7 @@ MeanShiftCluster <- function(data,...)
                          alpha=0.0,
                          epsilon=1.0e-10,
                          epsilonCluster=1.0e-4,
-                         bandwidth=rep(0.40,NCOL(data)));
+                         bandwidth=rep(0.35,NCOL(data)));
   }
   else
   {
