@@ -38,11 +38,11 @@ MeanShiftCluster <- function(data,...)
 #    cat("W")
     cluster <- meanShiftR::meanShift(data,
                          nNeighbors=round(0.40*nrow(data)),
-                         iterations=20,
-                         alpha=0.5,
-                         epsilon=1.0e-8,
+                         iterations=100,
+                         alpha=0.0,
+                         epsilon=1.0e-10,
                          epsilonCluster=1.0e-3,
-                         bandwidth=rep(0.5,NCOL(data)));
+                         bandwidth=rep(1.00,NCOL(data)));
   }
   else
   {
